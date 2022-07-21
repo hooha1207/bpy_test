@@ -1,3 +1,9 @@
+"""
+해당 파일은 작성자가 짠 코드가 아니며 핸드폰으로 코드를 읽기 위해 업로드했을 뿐이다
+출처는 아래와 같다
+https://blenderartists.org/t/revised-mesh-tension-add-on/1239091
+"""
+
 bl_info = {
     "name": "Mesh Tension",
     "author": "Steve Miller",
