@@ -20,8 +20,12 @@ buildify
 https://youtu.be/0Ch7qlc0fE8  
 https://youtu.be/gKZ074ISG_M  
 
-blender Python API doc  
+Python API doc  
 https://docs.blender.org/api/current/index.html  
 
-blender build addon
+build addon
 https://youtu.be/CRKVKxa2l5I
+
+wood material
+https://youtu.be/Egd_BNAT3l8
+
