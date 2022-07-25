@@ -18,3 +18,7 @@ https://youtu.be/A3NuTzFYSNQ
 
 buildify  
 https://youtu.be/0Ch7qlc0fE8  
+https://youtu.be/gKZ074ISG_M  
+
+blender Python API doc  
+https://docs.blender.org/api/current/index.html  
