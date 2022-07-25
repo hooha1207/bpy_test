@@ -23,9 +23,9 @@ https://youtu.be/gKZ074ISG_M
 Python API doc  
 https://docs.blender.org/api/current/index.html  
 
-build addon
+build addon  
 https://youtu.be/CRKVKxa2l5I
 
-wood material
-https://youtu.be/Egd_BNAT3l8
-
+wood material  
+https://youtu.be/Egd_BNAT3l8  
+https://youtu.be/CHxelgYdBaI  
