@@ -22,3 +22,6 @@ https://youtu.be/gKZ074ISG_M
 
 blender Python API doc  
 https://docs.blender.org/api/current/index.html  
+
+blender build addon
+https://youtu.be/CRKVKxa2l5I
