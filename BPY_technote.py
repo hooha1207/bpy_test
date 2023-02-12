@@ -1,6 +1,10 @@
 import bpy
 import math
 
+
+bpy.context.object.matrix_world
+#현재 activate select 되어있는 오브젝트의 mesh coordinate를 출력한다
+
 bpy.context.scene.frame_current
 #현재 키프레임 지점을 출력할 수 있다
 bpy.context.scene.frame_start
