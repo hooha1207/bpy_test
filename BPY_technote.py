@@ -2,8 +2,23 @@ import bpy
 import math
 
 
-bpy.context.object.matrix_world
-#현재 activate select 되어있는 오브젝트의 mesh coordinate를 출력한다
+actOb = bpy.context.object
+org_co = bpy.context.object.matrix_world.to_translation()
+actOb_sc = bpy.context.object.matrix_world.to_scale()
+vertList = [((actOb_sc*vertex.co) + org_co) for vertex in actOb.data.vertices if vertex.select]
+#선택된 오브젝트의 선택된 mesh vetex 좌표를 world space로 얻을 수 있다
+#mesh vertex 좌표는 mesh vertex 좌표에 origin 좌표를 더해서 구할 수 있다
+#이때 오브젝트의 scale을 mesh vertex 좌표에 곱해주면 scale을 apply한 좌표 값을 얻을 수 있다
+actOb = bpy.context.object
+org_co = bpy.context.object.matrix_world.to_translation()
+vertList = [(org_co + vertex.co) for vertex in actOb.data.vertices if vertex.select]
+#선택된 오브젝트의 선택된 mesh vetex 좌표를 world space로 얻을 수 있다
+#mesh vertex 좌표는 mesh vertex 좌표에 origin 좌표를 더해서 구할 수 있다
+actOb = bpy.context.object
+vertList = [(vertex.co) for vertex in actOb.data.vertices if vertex.select]
+#선택된 오브젝트의 선택된 mesh vetex 좌표를 local space로 얻을 수 있다
+bpy.context.object.matrix_world.to_translation()
+#오브젝트의 origin을 출력할 수 있다
 
 bpy.context.scene.frame_current
 #현재 키프레임 지점을 출력할 수 있다
