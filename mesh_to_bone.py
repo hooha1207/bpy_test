@@ -41,7 +41,10 @@ bpy.ops.object.mode_set(mode='OBJECT')
 
 
 
+
 add_amarture_name = "add_amarture"
+bone_size = 0.08
+rebatch = -(0.5-bone_size/2)
 
 bpy.ops.object.armature_add(enter_editmode=False, align='WORLD', location=(0,0,0), scale=(0.01, 0.01, 0.01))
 bpy.context.object.name = add_amarture_name
@@ -51,12 +54,13 @@ bpy.ops.object.mode_set(mode='EDIT')
 bpy.ops.armature.select_all(action='SELECT')
 bpy.ops.armature.delete()
 
-
 for idx, i in enumerate(vertices_co):
     add_bone_name = f"shape_to_bone{idx}"
     bpy.ops.armature.bone_primitive_add(name=add_bone_name)
     bpy.ops.armature.select_linked()
     bpy.ops.transform.translate(value=i) #world_space_coordinate
+    bpy.ops.transform.resize(value=(bone_size, bone_size, bone_size))
+    bpy.ops.transform.translate(value=(0.0,0.0,rebatch))
 
     bpy.ops.object.mode_set(mode='OBJECT')
     bpy.context.view_layer.objects.active = actOb
