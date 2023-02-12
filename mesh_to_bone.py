@@ -54,7 +54,7 @@ bpy.ops.armature.delete()
 
 for idx, i in enumerate(vertices_co):
     add_bone_name = f"shape_to_bone{idx}"
-    bpy.ops.armature.bone_primitive_add(name=add_amarture_name)
+    bpy.ops.armature.bone_primitive_add(name=add_bone_name)
     bpy.ops.armature.select_linked()
     bpy.ops.transform.translate(value=i) #world_space_coordinate
 
