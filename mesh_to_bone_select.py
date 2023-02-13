@@ -89,4 +89,8 @@ bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amartu
 
 #만약 bone mirror 기능을 만들고 싶다면,
 #먼저 대칭되는 객체를 mirror로 만든다 ex) 왼쪽 오른쪽 각각 독립 오브젝트로 만들기
-#
+#각각 따로 mesh to bone 스크립트를 실행하고 auto name 기능을 이용해 왼쪽 오른쪽 이름을 만들어준다
+#이럼 vertex group 이름에도 대칭이름이 적용된다
+#대칭되는 객체 중 하나를 symmetrize 기능으로 생성하고 생성하지 않은 amarture는 삭제한다
+#amarture가 삭제된 객체의 amarture를 symmetrize로 반대쪽 bone이 생성된 amarture로 바꿔준다
+#mirror 기능으로 bone을 다룰 수 있게 된다
