@@ -53,6 +53,7 @@ rebatch = -(0.5-bone_size/2)
 bpy.ops.object.armature_add(enter_editmode=False, align='WORLD', location=(0,0,0), scale=(0.01, 0.01, 0.01))
 bpy.context.object.name = add_amarture_name
 
+add_amarture_name = bpy.context.object.name
 
 bpy.ops.object.mode_set(mode='EDIT')
 bpy.ops.armature.select_all(action='SELECT')
