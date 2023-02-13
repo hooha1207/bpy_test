@@ -85,3 +85,8 @@ bpy.context.view_layer.objects.active = actOb
 bpy.ops.object.modifier_add(type='ARMATURE')
 bpy.context.object.modifiers["Armature"].object = bpy.data.objects[add_amarture_name]
 bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amarture_name)
+
+
+#만약 bone mirror 기능을 만들고 싶다면,
+#먼저 대칭되는 객체를 mirror로 만든다 ex) 왼쪽 오른쪽 각각 독립 오브젝트로 만들기
+#
