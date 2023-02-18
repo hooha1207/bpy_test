@@ -14,9 +14,6 @@ https://youtu.be/UM-O-69Zmx0
 https://youtu.be/8xjur7uoBUo  
 https://youtu.be/1-LtYBq6Daw  
 
-dead and buried 2 game play video  
-https://youtu.be/A3NuTzFYSNQ  
-
 buildify  
 https://youtu.be/0Ch7qlc0fE8  
 https://youtu.be/gKZ074ISG_M  
