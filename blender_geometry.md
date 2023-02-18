@@ -9,7 +9,7 @@ https://www.youtube.com/watch?v=wq5Xf4s_0ZU
 blender demo files  
 https://www.blender.org/download/demo-files/  
 
-instance lock  
+instance rock  
 https://youtu.be/UM-O-69Zmx0  
 https://youtu.be/8xjur7uoBUo  
 https://youtu.be/1-LtYBq6Daw  
