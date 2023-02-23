@@ -29,3 +29,4 @@ bpy.ops.object.mode_set(mode='OBJECT')
 
 #해당 스크립트는 amarture를 duplicate 해서 controller를 만들 때 copy location을 일괄 적용해주는 스크립트다
 #cloth wrinkle bone을 figure bone에서 분리하여 컨트롤하기 위해 만들었다
+#active 객체가 controller 즉 constraint 가 적용되지 않은 상태가 된다
