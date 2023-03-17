@@ -2,6 +2,9 @@ import bpy
 import math
 
 
+bpy.ops.mesh.select_mirror()
+
+
 actOb = bpy.context.object
 org_co = bpy.context.object.matrix_world.to_translation()
 actOb_sc = bpy.context.object.matrix_world.to_scale()
