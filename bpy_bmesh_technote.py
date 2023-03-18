@@ -2,6 +2,21 @@ import bpy
 import math
 
 
+
+choose_layer_index = 0
+for bone_layer_index in range(len(bpy.context.object.data.layers)):
+    bpy.context.object.data.layers[bone_layer_index] = True
+for bone_layer_index in range(len(bpy.context.object.data.layers)):
+    if bone_layer_index == choose_layer_index:
+        continue
+    bpy.context.object.data.layers[bone_layer_index] = False
+#bone layer의 경우, 무조건 하나 이상 활성화되어야만 된다
+#때문에 원하는 bone layer를 선택하려면, 전체를 활성화한 다음,
+#원하는 bone layer 외에는 전부 비활성화하는 과정이 필요하다
+#위 코드는 해당 과정을 수행한다
+
+
+
 bpy.ops.object.mode_set(mode='POSE')
 for bone_layer in range(len(bpy.context.object.data.layers)):
   bpy.context.object.data.layers[bone_layer] = True
