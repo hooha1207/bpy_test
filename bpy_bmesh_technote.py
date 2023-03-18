@@ -2,6 +2,13 @@ import bpy
 import math
 
 
+bpy.ops.object.mode_set(mode='POSE')
+for bone_layer in range(len(bpy.context.object.data.layers)):
+  bpy.context.object.data.layers[bone_layer] = True
+#armature 객체를 선택한 뒤, pose모드에 진입한다
+#pose모드에 진입한 뒤 bone_layer를 슬라이싱으로 접근하여 모든 layer를 활성화한다
+
+
 bpy.ops.mesh.select_mirror()
 
 
