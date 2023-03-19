@@ -87,6 +87,9 @@ bpy.context.object.modifiers["Armature"].object = bpy.data.objects[add_amarture_
 bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amarture_name)
 
 
+# how to use
+#edit mode에서 bone으로 바꾸고자 하는 vertex 선택 후 해당 스크립트 실행
+
 #만약 bone mirror 기능을 만들고 싶다면,
 #먼저 대칭되는 객체를 mirror로 만든다 ex) 왼쪽 오른쪽 각각 독립 오브젝트로 만들기
 #각각 따로 mesh to bone 스크립트를 실행하고 auto name 기능을 이용해 왼쪽 오른쪽 이름을 만들어준다
