@@ -2,6 +2,9 @@ import bpy
 import math
 
 
+bpy.data.objects['Armature'].data.bones.active
+#Armature 란 이름을 가진 오브젝트(armature)에서 active select 된 bone을 출력한다
+
 
 choose_layer_index = 0
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
