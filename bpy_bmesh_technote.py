@@ -2,6 +2,14 @@ import bpy
 import math
 
 
+bpy.ops.object.mode_set(mode='POSE')
+bpy.ops.pose.copy()
+bpy.ops.pose.paste(flipped=True)
+#pose를 flip 즉 반전시켜서 붙여넣는다
+#mirror 혹은 symmetric이랑은 다르다
+
+
+
 bpy.data.objects['Armature'].data.bones.active
 #Armature 란 이름을 가진 오브젝트(armature)에서 active select 된 bone을 출력한다
 
