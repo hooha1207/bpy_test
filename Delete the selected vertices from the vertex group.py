@@ -20,3 +20,6 @@ for ob in selOb:
 # 혹은 edit mode에서 모든 vertex group에서 값을 삭제할 vertex를 선택한 뒤 
 # F3을 눌러 remove from all 을 검색해서 실행하기
 # 이럼 위 코드를 실행한 것과 같은 결과를 얻음
+
+# 굳이 이렇게 코드로 기록을 남기는 이유는,
+# 특정 vertex group에서는 값을 삭제하지 않게 하기 
