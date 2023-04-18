@@ -22,12 +22,13 @@ bpy.ops.object.mode_set(mode='OBJECT')
 bpy.ops.object.select_all(action='DESELECT')
 
 
-def set_bone(curve_name):
+for ob in ob_select:
+    curve_name = ob.name
     
-    for spline_i in range(len(bpy.data.curves[f'{curve_name}'].splines)):
-        if bpy.data.curves[f'{curve_name}'].splines[spline_i].type == 'BEZIER':
+    for spline_i in range(len(ob.data.splines)):
+        if ob.data.splines[spline_i].type == 'BEZIER':
             
-            for bezier_point_i in range(len(bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points)):
+            for bezier_point_i in range(len(ob.data.splines[spline_i].bezier_points)):
                 bpy.ops.object.select_all(action='DESELECT')
 
                 #control_point
@@ -51,7 +52,7 @@ def set_bone(curve_name):
                 bpy.ops.object.mode_set(mode='EDIT')
                 
                 #set place
-                bpy.ops.transform.translate(value=bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points[bezier_point_i].co) #world_space_coordinate
+                bpy.ops.transform.translate(value=ob.data.splines[spline_i].bezier_points[bezier_point_i].co) #world_space_coordinate
                 
                 #set bone size
                 bpy.ops.transform.resize(value=(parent_bone_size, parent_bone_size, parent_bone_size))
@@ -64,7 +65,8 @@ def set_bone(curve_name):
                 bpy.context.view_layer.objects.active = bpy.data.objects[curve_name]
                 
                 bpy.ops.object.mode_set(mode='EDIT')
-                bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points[bezier_point_i].select_control_point = True
+                bpy.ops.curve.select_all(action='DESELECT')
+                ob.data.splines[spline_i].bezier_points[bezier_point_i].select_control_point = True
                 bpy.ops.object.hook_add_selob(use_bone=True)
                 bpy.ops.curve.select_all(action='DESELECT')
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -94,7 +96,7 @@ def set_bone(curve_name):
                 bpy.ops.object.mode_set(mode='EDIT')
                 
                 #set place
-                bpy.ops.transform.translate(value=bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points[bezier_point_i].handle_left) #world_space_coordinate
+                bpy.ops.transform.translate(value=ob.data.splines[spline_i].bezier_points[bezier_point_i].handle_left) #world_space_coordinate
                 
                 #set bone size
                 bpy.ops.transform.resize(value=(bone_size, bone_size, bone_size))
@@ -107,7 +109,8 @@ def set_bone(curve_name):
                 bpy.context.view_layer.objects.active = bpy.data.objects[curve_name]
                 
                 bpy.ops.object.mode_set(mode='EDIT')
-                bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points[bezier_point_i].select_left_handle = True
+                bpy.ops.curve.select_all(action='DESELECT')
+                ob.data.splines[spline_i].bezier_points[bezier_point_i].select_left_handle = True
                 bpy.ops.object.hook_add_selob(use_bone=True)
                 bpy.ops.curve.select_all(action='DESELECT')
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -137,7 +140,7 @@ def set_bone(curve_name):
                 bpy.ops.object.mode_set(mode='EDIT')
                 
                 #set place
-                bpy.ops.transform.translate(value=bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points[bezier_point_i].handle_right) #world_space_coordinate
+                bpy.ops.transform.translate(value=ob.data.splines[spline_i].bezier_points[bezier_point_i].handle_right) #world_space_coordinate
                 
                 #set bone size
                 bpy.ops.transform.resize(value=(bone_size, bone_size, bone_size))
@@ -150,7 +153,8 @@ def set_bone(curve_name):
                 bpy.context.view_layer.objects.active = bpy.data.objects[curve_name]
                 
                 bpy.ops.object.mode_set(mode='EDIT')
-                bpy.data.curves[f'{curve_name}'].splines[spline_i].bezier_points[bezier_point_i].select_right_handle = True
+                bpy.ops.curve.select_all(action='DESELECT')
+                ob.data.splines[spline_i].bezier_points[bezier_point_i].select_right_handle = True
                 bpy.ops.object.hook_add_selob(use_bone=True)
                 bpy.ops.curve.select_all(action='DESELECT')
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -167,8 +171,8 @@ def set_bone(curve_name):
 
 
 
-        elif bpy.data.curves[f'{curve_name}'].splines[spline_i].type == 'NURBS':
-            for nurbs_point_i in range(len(bpy.data.curves[f'{curve_name}'].splines[spline_i].points)):
+        elif ob.data.splines[spline_i].type == 'NURBS':
+            for nurbs_point_i in range(len(ob.data.splines[spline_i].points)):
                 bpy.ops.object.select_all(action='DESELECT')
 
                 #control_point
@@ -192,7 +196,7 @@ def set_bone(curve_name):
                 bpy.ops.object.mode_set(mode='EDIT')
                 
                 #set place
-                bpy.ops.transform.translate(value=bpy.data.curves[f'{curve_name}'].splines[spline_i].points[nurbs_point_i].co[:-1]) #world_space_coordinate
+                bpy.ops.transform.translate(value=ob.data.splines[spline_i].points[nurbs_point_i].co[:-1]) #world_space_coordinate
                 
                 #set bone size
                 bpy.ops.transform.resize(value=(bone_size, bone_size, bone_size))
@@ -205,7 +209,8 @@ def set_bone(curve_name):
                 bpy.context.view_layer.objects.active = bpy.data.objects[curve_name]
                 
                 bpy.ops.object.mode_set(mode='EDIT')
-                bpy.data.curves[f'{curve_name}'].splines[spline_i].points[nurbs_point_i].select = True
+                bpy.ops.curve.select_all(action='DESELECT')
+                ob.data.splines[spline_i].points[nurbs_point_i].select = True
                 bpy.ops.object.hook_add_selob(use_bone=True)
                 bpy.ops.curve.select_all(action='DESELECT')
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -213,11 +218,6 @@ def set_bone(curve_name):
                 #control_point
                 
 
-
-
-
-for i in ob_select:
-    set_bone(i.name)
 
 
 
