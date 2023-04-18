@@ -1,6 +1,6 @@
 #armature를 activate_select로 설정한다
 #curve를 select로 설정한다
-#이때 curve는 spline type이 nubs면 안되며, apply_all_transform을 해줘야 된다
+#이때 curve는 spline type이 nurbs 가 아니어야 되며, apply_all_transform을 해줘야 된다
 #스크립트를 실행하면, control point는 parent, handle point는 child로 이루어진 bone이 activate_select 된 armatrue에 추가된다
 
 
