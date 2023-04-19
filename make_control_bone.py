@@ -36,6 +36,8 @@ for i in range(len(bpy.context.object.data.layers)):
 
 bpy.ops.object.mode_set(mode='POSE')
 bpy.ops.pose.select_all(action='SELECT')
+#If you want only selected bones to be control bones,
+#modified here
 
 select_bone_name = [i.name for i in bpy.context.selected_pose_bones]
 
