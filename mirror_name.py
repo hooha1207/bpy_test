@@ -1,12 +1,12 @@
 import bpy
 
 
-new_bone_name = 'shoulder'
+new_bone_name = 'latissimus'
 
 filter_name = ['control']
 
 for bone in bpy.context.selected_pose_bones:
-    if bone.head[0] < 0:
+    if bone.head[0] > 0:
         #type left
         add_name = ''
         if filter_name[0] in bone.name:
@@ -16,7 +16,7 @@ for bone in bpy.context.selected_pose_bones:
 
 
 for bone in bpy.context.selected_pose_bones:
-    if bone.head[0] > 0:
+    if bone.head[0] < 0:
         #type right
         add_name = ''
         if filter_name[0] in bone.name:
