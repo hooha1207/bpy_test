@@ -1,21 +1,27 @@
 import bpy
 
 
-new_bone_name = 'eyeline_inner'
+new_bone_name = 'shoulder'
 
-
+filter_name = ['control']
 
 for bone in bpy.context.selected_pose_bones:
     if bone.head[0] < 0:
         #type left
-        bone.name = f'{new_bone_name}'
+        add_name = ''
+        if filter_name[0] in bone.name:
+            add_name = '_control'
+        bone.name = f'{new_bone_name}{add_name}'
         bone.name = f'{bone.name}.L'
 
 
 for bone in bpy.context.selected_pose_bones:
     if bone.head[0] > 0:
         #type right
-        bone.name = f'{new_bone_name}'
+        add_name = ''
+        if filter_name[0] in bone.name:
+            add_name = '_control'
+        bone.name = f'{new_bone_name}{add_name}'
         bone.name = f'{bone.name}.R'
 
 
