@@ -60,7 +60,7 @@ for bone in select_bone_name:
     cstrt.target_space = 'LOCAL'
     
     if type(bpy.data.objects[actob_n].pose.bones[bone].parent) == type(None):
-        add_bone_parent_name = f'{add_bone_name}_control_{bone}'
+        add_bone_parent_name = f'{add_bone_name}_{bone}'
         
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.armature.bone_primitive_add(name=add_bone_parent_name)
