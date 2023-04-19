@@ -44,7 +44,7 @@ for ob in ob_select:
                 
                 #set bone active
                 bpy.ops.object.mode_set(mode='POSE')
-                select_bone_name = bpy.context.selected_pose_bones.__str__().split('[')[-1][1:-3]
+                select_bone_name = bpy.context.selected_pose_bones[0].name
                 parent_bone_name = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -88,7 +88,7 @@ for ob in ob_select:
                 
                 #set bone active
                 bpy.ops.object.mode_set(mode='POSE')
-                select_bone_name = bpy.context.selected_pose_bones.__str__().split('[')[-1][1:-3]
+                select_bone_name = bpy.context.selected_pose_bones[0].name
                 child_bone_name_L = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -132,7 +132,7 @@ for ob in ob_select:
                 
                 #set bone active
                 bpy.ops.object.mode_set(mode='POSE')
-                select_bone_name = bpy.context.selected_pose_bones.__str__().split('[')[-1][1:-3]
+                select_bone_name = bpy.context.selected_pose_bones[0].name
                 child_bone_name_R = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
                 bpy.ops.object.mode_set(mode='OBJECT')
@@ -188,7 +188,7 @@ for ob in ob_select:
                 
                 #set bone active
                 bpy.ops.object.mode_set(mode='POSE')
-                select_bone_name = bpy.context.selected_pose_bones.__str__().split('[')[-1][1:-3]
+                select_bone_name = bpy.context.selected_pose_bones[0].name
                 parent_bone_name = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
                 bpy.ops.object.mode_set(mode='OBJECT')
