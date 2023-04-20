@@ -2,6 +2,15 @@ import bpy
 import math
 
 
+
+import bpy
+for obj in bpy.context.selected_objects:
+    for modif in obj.modifiers:
+        obj.modifiers.remove(modif)
+#선택한 오브젝트의 modifier를 전부 삭제한다
+#해당 기능은 blender ui로 사용할 수 없어 기록한다
+
+
 bpy.ops.object.mode_set(mode='POSE')
 bpy.ops.pose.copy()
 bpy.ops.pose.paste(flipped=True)
