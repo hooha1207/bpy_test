@@ -74,6 +74,7 @@ for bone in select_bone_name:
         
         bpy.ops.object.mode_set(mode='POSE')
         check_add_bone_name = bpy.context.selected_pose_bones[0].name
+        bpy.context.object.pose.bones[check_add_bone_name].bone.use_deform = False
         bpy.ops.object.mode_set(mode='EDIT')
         
         add_bone_tree[bone] = [check_add_bone_name, [i.name for i in bpy.data.objects[actob_n].pose.bones[bone].children]]
@@ -93,6 +94,7 @@ for bone in select_bone_name:
         
         bpy.ops.object.mode_set(mode='POSE')
         check_add_bone_name = bpy.context.selected_pose_bones[0].name
+        bpy.context.object.pose.bones[check_add_bone_name].bone.use_deform = False
         bpy.ops.object.mode_set(mode='EDIT')
         
         try:
