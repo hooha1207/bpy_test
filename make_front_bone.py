@@ -7,7 +7,7 @@
 import bpy
 
 
-spline_bone_layer = 24
+spline_bone_layer = 25
 
 select_bone_layer = [  ] + [spline_bone_layer]
 
@@ -49,11 +49,8 @@ for bone in select_bone_name:
             child.select_head = True
         bpy.ops.armature.select_linked()
         
-        child_list = [i.name for i in bpy.data.objects[actob_n].data.edit_bones[bone].children]
-        
+        child_list = [i.name for i in bpy.context.selected_editable_bones if i.name != bone]
         bpy.ops.armature.duplicate_move(ARMATURE_OT_duplicate={"do_flip_names":False}, TRANSFORM_OT_translate={"value":(0, 0, 0), "orient_axis_ortho":'X', "orient_type":'GLOBAL', "orient_matrix":((0, 0, 0), (0, 0, 0), (0, 0, 0)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_elements":{'INCREMENT'}, "use_snap_project":False, "snap_target":'CLOSEST', "use_snap_self":True, "use_snap_edit":True, "use_snap_nonedit":True, "use_snap_selectable":False, "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, "use_accurate":False, "use_automerge_and_split":False})
-        
-        
         child_count = 0
         
         bpy.ops.object.mode_set(mode='POSE')
@@ -70,12 +67,15 @@ for bone in select_bone_name:
                 cstrt.target_space = 'LOCAL'
                 cstrt.subtarget = bpy.data.objects[actob_n].data.bones[bone].name
                 cstrt.mix_mode = 'BEFORE_FULL'
-
                 bpy.ops.pose.bone_layers(layers=Bbone_layer)
+                
             elif type(sel_bone.parent) != type(None):
                 sel_bone.name = f'{add_bone_name}_{bone}'
                 check_sel_bone_name = sel_bone.name
                 
+                if len(bpy.data.objects[actob_n].pose.bones[check_sel_bone_name].constraints) != 0:
+                    for constraints in bpy.data.objects[actob_n].pose.bones[check_sel_bone_name].constraints:
+                        bpy.data.objects[actob_n].pose.bones[check_sel_bone_name].constraints.remove(constraints)
                 
                 cstrt = bpy.data.objects[actob_n].pose.bones[check_sel_bone_name].constraints.new("COPY_TRANSFORMS")
                 cstrt.name = constraints_name
@@ -87,9 +87,11 @@ for bone in select_bone_name:
                 
                 child_count += 1
 
-                
-            
-        
+
+
+
+
+
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
     bpy.context.object.data.layers[bone_layer_index] = True
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
