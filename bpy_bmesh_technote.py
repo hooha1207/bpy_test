@@ -9,9 +9,24 @@ bpy.ops.pose.paste(flipped=True)
 #mirror 혹은 symmetric이랑은 다르다
 
 
-
 bpy.data.objects['Armature'].data.bones.active
 #Armature 란 이름을 가진 오브젝트(armature)에서 active select 된 bone을 출력한다
+
+
+bpy.data.objects['Armature'].pose.bones['Bone'].bone.select
+#Armature 란 이름을 가진 오브젝트(armature)가 pose mode일 때 bone을 select 상태를 bool로 출력한다
+bpy.data.objects['Armature'].pose.bones['Bone'].bone.select = True
+#Armature 란 이름을 가진 오브젝트(armature)가 pose mode일 때 Bone이란 이름을 가진 bone을 select 상태를 True로 만들어준다
+bpy.data.objects['Armature'].pose.bones['Bone'].bone.select = False
+#Armature 란 이름을 가진 오브젝트(armature)가 pose mode일 때  Bone이란 이름을 가진 bone을 select 상태를 False로 만들어준다
+
+bpy.data.objects['Armature'].data.edit_bones['Bone'].bone.select
+#Armature 란 이름을 가진 오브젝트(armature)가 EDIT mode일 때 bone을 select 상태를 bool로 출력한다
+bpy.data.objects['Armature'].data.edit_bones['Bone'].bone.select = True
+#Armature 란 이름을 가진 오브젝트(armature)가 EDIT mode일 때 bone을 select 상태를 True로 만들어준다
+bpy.data.objects['Armature'].data.edit_bones['Bone'].bone.select = False
+#Armature 란 이름을 가진 오브젝트(armature)가 EDIT mode일 때 bone을 select 상태를 False로 만들어준다
+
 
 
 choose_layer_index = 0
