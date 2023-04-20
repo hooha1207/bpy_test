@@ -47,6 +47,7 @@ for ob in ob_select:
                 select_bone_name = bpy.context.selected_pose_bones[0].name
                 parent_bone_name = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
+                bpy.context.object.pose.bones[select_bone_name].bone.use_deform = False
                 bpy.ops.object.mode_set(mode='OBJECT')
                 
                 bpy.ops.object.mode_set(mode='EDIT')
@@ -91,6 +92,7 @@ for ob in ob_select:
                 select_bone_name = bpy.context.selected_pose_bones[0].name
                 child_bone_name_L = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
+                bpy.context.object.pose.bones[select_bone_name].bone.use_deform = False
                 bpy.ops.object.mode_set(mode='OBJECT')
                 
                 bpy.ops.object.mode_set(mode='EDIT')
@@ -135,6 +137,7 @@ for ob in ob_select:
                 select_bone_name = bpy.context.selected_pose_bones[0].name
                 child_bone_name_R = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
+                bpy.context.object.pose.bones[select_bone_name].bone.use_deform = False
                 bpy.ops.object.mode_set(mode='OBJECT')
                 
                 bpy.ops.object.mode_set(mode='EDIT')
@@ -191,6 +194,7 @@ for ob in ob_select:
                 select_bone_name = bpy.context.selected_pose_bones[0].name
                 parent_bone_name = select_bone_name
                 bpy.context.object.data.bones.active = bpy.context.object.data.bones[select_bone_name]
+                bpy.context.object.pose.bones[select_bone_name].bone.use_deform = False
                 bpy.ops.object.mode_set(mode='OBJECT')
                 
                 bpy.ops.object.mode_set(mode='EDIT')
