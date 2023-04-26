@@ -3,6 +3,11 @@ import math
 
 
 
+bpy.ops.mesh.mark_sharp()
+#mesh object의 edit mode일 때 선택된 vertex에 sharp를 mark해준다
+bpy.ops.mesh.mark_sharp(clear=True)
+#mesh object의 edit mode일 때 선택된 vertex에 sharp를 clear해준다
+
 import bpy
 for obj in bpy.context.selected_objects:
     for modif in obj.modifiers:
