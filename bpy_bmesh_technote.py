@@ -1,7 +1,15 @@
 import bpy
 import math
+import os
 
 
+
+bpy.ops.render.render()
+#현재 키프레임에서 rnedering을 시작해준다
+bpy.ops.render.render(write_still=True)
+#현재 키프레임에서 rendering을 시작하고 rendering 된 이미지를 저장경로에 저장한다
+bpy.context.scene.render.filepath = os.path.join(output_dir, (output_file_string))
+#rendering 된 이미지를 저장할 경로를 설정해준다
 
 bpy.ops.mesh.mark_sharp()
 #mesh object의 edit mode일 때 선택된 vertex에 sharp를 mark해준다
