@@ -1,4 +1,5 @@
-#armature를 선택한 다음, 원하는 bone layer를 코드에 입력하고 해당 코드를 실행하면
+#armature를 선택한 다음, 원하는 bone layer를 코드에 입력하고
+# cloth curve가 존재하는 collection 을 코드에 입력하고 실행하면
 #현재 레이어에 존재하는 모든 bone을 원하는 bone layer로 복사하는데,
 #이때 복사된 bone을 움직이면, 원래 존재하던 bone도 움직인다
 #local space로 설정한 이유는 spline ik의 경우 hook로 회전값을 부여할 수 없기 때문에 back bone이 필요해서다
