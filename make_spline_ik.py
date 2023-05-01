@@ -63,6 +63,8 @@ for selob in selob_n:
 #    bpy.ops.armature.subdivide(number_cuts=math.floor(minimum_cbone_density)-1)
     bpy.ops.armature.subdivide(number_cuts=curve_point_density-1)
     bpy.ops.object.mode_set(mode='POSE')
+    for pbone in bpy.context.selected_pose_bones:
+        bpy.data.objects[actob_n].pose.bones[pbone.name].bone.use_deform = False
     spline_ik_cstrt = bpy.context.selected_pose_bones[-1].constraints.new("SPLINE_IK")
     spline_ik_cstrt.target = bpy.data.objects[selob]
 #    spline_ik_cstrt.chain_count = math.floor(minimum_cbone_density)
