@@ -1,7 +1,7 @@
 #선택한 mesh object가 가지고 있는 vertex group 중 값이 아무것도 없는
 #즉 empty vertex group 을 삭제하는 코드다
 #오브젝트를 선택하고 코드를 실행하면 삭제된다
-#source: https://blender.community/c/rightclickselect/PQpn/?sorting=hot
+#reference: https://blender.community/c/rightclickselect/PQpn/?sorting=hot
 
 
 import bpy
