@@ -25,4 +25,4 @@ for id, vert in enumerate(ob.data.vertices):
 
     # only add to vertex group is weight is > 0
     sum = A + B
-    vgroup.add([id], sum ,'ADD')
+    vgroup.add([id], sum ,'REPLACE')
