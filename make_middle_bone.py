@@ -24,14 +24,12 @@ for cbone in circle_b:
     min_loc = 0
     ht_bool = False
     for mbone in middle_b:
-        if min > abs(cbone.tail[0] - mbone.head[0]) + abs(cbone.tail[1] - mbone.head[1]) + abs(cbone.tail[2] - mbone.head[2]):
+        if min >= abs(cbone.tail[0] - mbone.head[0]) + abs(cbone.tail[1] - mbone.head[1]) + abs(cbone.tail[2] - mbone.head[2]):
             min = abs(cbone.tail[0] - mbone.head[0]) + abs(cbone.tail[1] - mbone.head[1]) + abs(cbone.tail[2] - mbone.head[2])
             mbn = mbone.name
             min_loc = mbone.head
             ht_bool = False
         if min > abs(cbone.tail[0] - mbone.tail[0]) + abs(cbone.tail[1] - mbone.tail[1]) + abs(cbone.tail[2] - mbone.tail[2]):
-            if not ht_bool and len(mbone.children) == 0:
-                continue
             min = abs(cbone.tail[0] - mbone.tail[0]) + abs(cbone.tail[1] - mbone.tail[1]) + abs(cbone.tail[2] - mbone.tail[2])
             mbn = mbone.name
             min_loc = mbone.tail
