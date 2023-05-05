@@ -22,7 +22,6 @@ for cbone in circle_b:
     min = 10000
     mbn = ''
     min_loc = 0
-    ht_bool = False
     for mbone in middle_b:
         if min >= abs(cbone.tail[0] - mbone.head[0]) + abs(cbone.tail[1] - mbone.head[1]) + abs(cbone.tail[2] - mbone.head[2]):
             min = abs(cbone.tail[0] - mbone.head[0]) + abs(cbone.tail[1] - mbone.head[1]) + abs(cbone.tail[2] - mbone.head[2])
