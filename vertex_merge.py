@@ -12,8 +12,8 @@ vgroup_B_name = "Group.001"
 # Get both groups and add them into third
 ob = bpy.context.active_object
 
-#vgroup = ob.vertex_groups.new(name=vgroup_A_name+"+"+vgroup_B_name)
-vgroup = ob.vertex_groups[vgroup_A_name]
+vgroup = ob.vertex_groups.new(name=vgroup_A_name+"+"+vgroup_B_name)
+# vgroup = ob.vertex_groups[vgroup_A_name]
 
 for id, vert in enumerate(ob.data.vertices):
     available_groups = [v_group_elem.group for v_group_elem in vert.groups]
