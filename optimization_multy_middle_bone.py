@@ -1,6 +1,7 @@
 #middle stretch bone이 만들어진 bone은 active select로 설정
 #vertex를 최적화시킬 mesh는 select로 설정
 #armature의 pose mode로 진입하여 middle bone과 middle stretch bone을 선택하고 해당 스크립트 실행
+#이때 mesh object는 stretch bone의 vertex group이 존재해야만 된다 (안그럼 에러 발생)
 
 import bpy
 import numpy as np
