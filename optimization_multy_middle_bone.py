@@ -92,9 +92,6 @@ n_scalar = {}
 for cbn in scalar:
     n_scalar[cbn] = [mb_addmiddle_stretch[scalar[cbn][0]], scalar[cbn][1], scalar[cbn][2]]
 
-print(n_scalar)
-
-
 mbn_dic = {}
 
 for cbn in scalar:
@@ -108,6 +105,70 @@ for cbn in scalar:
     except:
         mbn_dic[scalar[cbn][0]] = np.array(bpy.data.objects[actob_n].pose.bones[cbn].head)
         mbn_dic[f'{scalar[cbn][0]}_tmp'] = 1
+
+
+#_tmp dic
+ba_bool = False
+
+smbn_list = []
+smbn_env_list = []
+
+tmp_dic = {}
+
+for mbn in mbn_dic:
+    if type(mbn_dic[mbn]) == type(1):
+        if mbn_dic[mbn] == 1:
+            smbn_list.append(mbn)
+
+for mbn in mbn_dic:
+    if type(mbn_dic[mbn]) == type(1):
+        tmp_dic[f'{mbn}'] = []
+
+
+for mbn in mbn_dic:
+    if type(mbn_dic[mbn]) == type(1):
+        if mbn in smbn_list:
+            tmp_dic[f'{mbn}'] += [before_mbn]
+            ba_bool = True
+        elif ba_bool:
+            tmp_dic[f'{before_mbn}'] += [mbn]
+            ba_bool = False
+        before_mbn = mbn
+
+ba_bool = False
+
+for mbn in list(reversed(mbn_dic.keys())):
+    if type(mbn_dic[mbn]) == type(1):
+        if mbn in smbn_list:
+            tmp_dic[f'{mbn}'] += [before_mbn]
+            ba_bool = True
+        elif ba_bool:
+            tmp_dic[f'{before_mbn}'] += [mbn]
+            ba_bool = False
+        before_mbn = mbn
+
+#{smbn : [smbn_env_1, smbn_env_1]}
+for key in tmp_dic:
+    tmp_dic[key] = list(set(tmp_dic[key]))
+
+del_keys = []
+
+for key in tmp_dic:
+    if len(tmp_dic[key]) == 0:
+        del_keys.append(key)
+
+for key in del_keys:
+    del tmp_dic[key]
+
+
+for key in tmp_dic:
+    mean_ba_loc = mbn_dic[key[:-4]] - mbn_dic[key[:-4]]
+    for env_key in tmp_dic[key]:
+        mean_ba_loc += mbn_dic[env_key[:-4]] / mbn_dic[env_key]
+    
+    mbn_dic[key[:-4]] = mean_ba_loc / 2
+    mbn_dic[key] = 1
+
 
 
 
