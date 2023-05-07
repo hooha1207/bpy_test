@@ -7,7 +7,7 @@ import numpy as np
 
 
 
-delete_stretch_bone = False
+bone_delete = False
 bone_hide = True
 bone_deform = False
 
@@ -59,7 +59,7 @@ for ob in selob_n:
         if bone_hide:
             bpy.data.objects[actob_n].pose.bones[cbn].bone.hide = True
         
-        if delete_stretch_bone:
+        if bone_delete:
             bpy.ops.object.mode_set(mode='EDIT')
             bpy.data.objects[actob_n].data.edit_bones.remove(bpy.data.objects[actob_n].data.edit_bones[cbn])
             bpy.ops.object.mode_set(mode='POSE')
