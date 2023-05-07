@@ -1,3 +1,7 @@
+#pose mode에서 merge 시키고자 하는 bone을 select로 설정한다
+#merge 기준이 되는 bone의 경우 active select로 설정한다
+#해당 스크립트를 실행한다
+
 import bpy
 import numpy as np
 
