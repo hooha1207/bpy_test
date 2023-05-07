@@ -7,7 +7,7 @@ import numpy as np
 
 
 
-delete_stretch_bone = False
+delete_stretch_bone = True
 
 
 add_middle_stretch_n = 'process_middle_bone'
@@ -59,17 +59,16 @@ for ob in selob_n:
             bpy.data.objects[actob_n].data.edit_bones.remove(bpy.data.objects[actob_n].data.edit_bones[cbn])
             bpy.ops.object.mode_set(mode='POSE')
 
-    ob.vertex_groups[middle_bn].name = add_middle_stretch_n
+#    ob.vertex_groups[middle_bn].name = add_middle_stretch_n
 
-bpy.ops.object.mode_set(mode='EDIT')
-bpy.ops.armature.bone_primitive_add(name = add_middle_stretch_n)
-bpy.ops.armature.select_linked()
-check_add_middle_stretch_n = bpy.context.selected_editable_bones[0].name
-bpy.data.objects[actob_n].data.edit_bones[check_add_middle_stretch_n].head = add_middle_stretch_mean_head
-bpy.data.objects[actob_n].data.edit_bones[check_add_middle_stretch_n].tail = bpy.data.objects[actob_n].data.edit_bones[middle_bn].head
+#bpy.ops.object.mode_set(mode='EDIT')
+#bpy.ops.armature.bone_primitive_add(name = add_middle_stretch_n)
+#bpy.ops.armature.select_linked()
+#check_add_middle_stretch_n = bpy.context.selected_editable_bones[0].name
+#bpy.data.objects[actob_n].data.edit_bones[check_add_middle_stretch_n].head = add_middle_stretch_mean_head
+#bpy.data.objects[actob_n].data.edit_bones[check_add_middle_stretch_n].tail = bpy.data.objects[actob_n].data.edit_bones[middle_bn].head
 
-bpy.ops.object.mode_set(mode='POSE')
-cstrt = bpy.data.objects[actob_n].pose.bones[check_add_middle_stretch_n].constraints.new("STRETCH_TO")
-cstrt.target = bpy.data.objects[actob_n]
-cstrt.subtarget = middle_bn
-
+#bpy.ops.object.mode_set(mode='POSE')
+#cstrt = bpy.data.objects[actob_n].pose.bones[check_add_middle_stretch_n].constraints.new("STRETCH_TO")
+#cstrt.target = bpy.data.objects[actob_n]
+#cstrt.subtarget = middle_bn
