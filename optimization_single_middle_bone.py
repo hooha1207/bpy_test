@@ -7,8 +7,9 @@ import numpy as np
 
 
 
-delete_stretch_bone = True
-
+delete_stretch_bone = False
+bone_hide = True
+bone_deform = False
 
 add_middle_stretch_n = 'process_middle_bone'
 
@@ -52,7 +53,11 @@ for ob in selob_n:
             vgroup.add([id], sum ,'REPLACE')
         
         ob.vertex_groups.remove(ob.vertex_groups[cbn])
-        bpy.data.objects[actob_n].pose.bones[cbn].bone.use_deform = False
+        
+        if bone_deform:
+            bpy.data.objects[actob_n].pose.bones[cbn].bone.use_deform = False
+        if bone_hide:
+            bpy.data.objects[actob_n].pose.bones[cbn].bone.hide = True
         
         if delete_stretch_bone:
             bpy.ops.object.mode_set(mode='EDIT')
