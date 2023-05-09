@@ -4,6 +4,22 @@ import os
 
 
 
+
+
+
+#reference = https://blender.stackexchange.com/questions/56011/how-to-install-pip-for-blenders-bundled-python
+import subprocess
+import sys
+import os
+python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
+target = os.path.join(sys.prefix, 'lib', 'site-packages')
+#subprocess.call([python_exe, '-m', 'ensurepip'])
+#subprocess.call([python_exe, '-m', 'pip', 'install', 'pip'])
+#example package to install (SciPy):
+subprocess.call([python_exe, '-m', 'pip', 'install', 'scipy', '-t', target])
+
+
+
 bpy.ops.render.render()
 #현재 키프레임에서 rnedering을 시작해준다
 bpy.ops.render.render(write_still=True)
