@@ -5,6 +5,18 @@ import os
 
 
 
+#reference = https://blenderartists.org/t/how-to-join-merge-two-armatures/1185935
+#armature_join
+obs = [bpy.data.objects['Armature'], bpy.data.objects['a2'], bpy.data.objects['a3']]
+
+c = {}
+c["object"] = bpy.data.objects['Armature']
+c["active_object"] = bpy.data.objects['Armature']
+c["selected_objects"] = obs
+c["selected_editable_objects"] = obs
+
+bpy.ops.object.join(c)
+
 
 
 #reference = https://blender.stackexchange.com/questions/56011/how-to-install-pip-for-blenders-bundled-python
