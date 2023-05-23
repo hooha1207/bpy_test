@@ -18,7 +18,7 @@ for spline_id in range(len(bpy.data.objects[actob_n].data.splines)):
         bpy.ops.curve.select_linked()
         bpy.ops.curve.separate()
     else:
-        bpy.data.objects[actob_n].data.splines[0].points[0].select_control_point = True
+        bpy.data.objects[actob_n].data.splines[0].points[0].select = True
         bpy.ops.curve.select_linked()
         bpy.ops.curve.separate()
     
