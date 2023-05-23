@@ -462,7 +462,7 @@ bpy.ops.object.select_all(action='DESELECT')
 for selob in selob_n:
     if bpy.data.objects[selob].data.splines[0].type == "NURBS":
         curve_point_density = len(bpy.data.objects[selob].data.splines[0].points)
-        unit_batch_loc = bpy.data.objects[selob].data.splines[0].points[0].co
+        unit_batch_loc = bpy.data.objects[selob].data.splines[0].points[0].co[:-1]
     elif bpy.data.objects[selob].data.splines[0].type == "BEZIER":
         curve_point_density = 3*len(bpy.data.objects[selob].data.splines[0].bezier_points)
         unit_batch_loc = bpy.data.objects[selob].data.splines[0].bezier_points[0].co
