@@ -640,6 +640,14 @@ for bone in select_bone_name:
 import numpy as np
 
 
+
+all_control_bonesize = 0.2
+rebatch = -(0.5-all_control_bonesize/2)
+
+
+
+
+
 def find_top_parent(cbone):
     bchild = False
     return_value = None
@@ -689,7 +697,10 @@ for cn in curve_bone_dic:
     bpy.ops.armature.select_linked()
     bpy.ops.object.mode_set(mode='POSE')
     check_all_control_p_n = bpy.context.selected_pose_bones[0].name
+    
     bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.transform.resize(value=(all_control_bonesize, all_control_bonesize, all_control_bonesize))
+    bpy.ops.transform.translate(value=(0.0,0.0,rebatch))
     bpy.context.object.data.bones.active = bpy.context.object.data.bones[check_all_control_p_n]
     bpy.context.object.data.bones[check_all_control_p_n].use_deform = False
     bpy.ops.transform.translate(value=center_head) #world_space_coordinate
