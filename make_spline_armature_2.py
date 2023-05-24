@@ -574,6 +574,7 @@ bpy.ops.pose.select_all(action='SELECT')
 select_bone_name = [i.name for i in bpy.context.selected_pose_bones]
 
 
+back2cont = {}
 
 for bone in select_bone_name:
     bone_location = bpy.data.objects[actob_n].pose.bones[bone].head
@@ -602,6 +603,7 @@ for bone in select_bone_name:
                 sel_bone.name = f'{add_bone_name}_{bone}'
                 check_sel_bone_name = sel_bone.name
                 
+                back2cont[bone] = check_sel_bone_name
                 
                 cstrt = bpy.data.objects[actob_n].pose.bones[check_sel_bone_name].constraints.new("COPY_TRANSFORMS")
                 cstrt.name = constraints_name
@@ -673,6 +675,7 @@ for bone_layer_index in range(len(bpy.context.object.data.layers)):
 
 all_control_p_n = 'all_control_p'
 
+
 bpy.ops.object.mode_set(mode='EDIT')
 for cn in curve_bone_dic:
     bone_l_x = [bpy.data.objects[actob_n].data.bones[bone_n].head_local.x for bone_n in curve_bone_dic[cn]]
@@ -696,8 +699,9 @@ for cn in curve_bone_dic:
         control_bone_name = bpy.data.objects[actob_n].pose.bones[bone_n].constraints["spline_IK_hook_constraints"].subtarget
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.data.objects[actob_n].data.edit_bones[control_bone_name].parent = bpy.data.objects[actob_n].data.edit_bones[check_all_control_p_n]
-    
-    bpy.data.objects[actob_n].data.edit_bones[tmp_dic[cn]].parent = bpy.data.objects[actob_n].data.edit_bones[check_all_control_p_n]
+    bpy.data.objects[actob_n].data.edit_bones[back2cont[tmp_dic[cn]]].parent = bpy.data.objects[actob_n].data.edit_bones[check_all_control_p_n]
+
+
 
 
 bpy.ops.object.mode_set(mode='POSE')
