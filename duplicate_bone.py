@@ -1,11 +1,13 @@
 import bpy
 
 
-filter_bone_layer = 16
+filter_bone_layer = 17
 
 constraints_name = 'IK_constraints'
 
 constraints_type = 'COPY_TRANSFORMS'
+
+clear = True
 
 
 
@@ -19,7 +21,7 @@ for i in range(len(bpy.context.object.data.layers)):
         Bbone_layer.append(False)
 
 
-actob_n = bpy.context.object.name
+actob_n = bpy.context.active_object.name
 
 bpy.ops.object.mode_set(mode='POSE')
 selb_n = [pb.name for pb in bpy.context.selected_pose_bones]
@@ -36,6 +38,10 @@ for bn in selb_n:
     bpy.ops.armature.duplicate_move()
     check_add_bone_n = bpy.context.selected_editable_bones[0].name
     bpy.ops.object.mode_set(mode='POSE')
+    if clear:
+        for rcs in bpy.data.objects[actob_n].pose.bones[check_add_bone_n].constraints.values():
+            bpy.data.objects[actob_n].pose.bones[check_add_bone_n].constraints.remove(rcs)
+    
     cstrt = bpy.data.objects[actob_n].pose.bones[bn].constraints.new(constraints_type)
     cstrt.target = bpy.data.objects[actob_n]
     cstrt.subtarget = check_add_bone_n
