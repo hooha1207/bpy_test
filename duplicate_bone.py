@@ -3,7 +3,7 @@ import bpy
 
 filter_bone_layer = 17
 
-constraints_name = 'IK_constraints'
+constraints_name = 'FK_constraints'
 
 constraints_type = 'COPY_TRANSFORMS'
 
