@@ -49,6 +49,14 @@ for bn in selb_n:
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.data.objects[actob_n].data.edit_bones[check_add_bone_n].parent = bpy.data.objects[actob_n].data.edit_bones[bn].parent
     bpy.ops.armature.bone_layers(layers=Bbone_layer)
+    ob_ab_dic[bn] = check_add_bone_n
+
+for ob in ob_ab_dic:
+    ab = ob_ab_dic[ob]
+    if type(bpy.data.objects[actob_n].data.edit_bones[ob].parent) != type(None):
+        ob_parent = bpy.data.objects[actob_n].data.edit_bones[ob].parent.name
+        bpy.data.objects[actob_n].data.edit_bones[ab].parent = bpy.data.objects[actob_n].data.edit_bones[ob_ab_dic[ob_parent]]
+
 
 
 bpy.ops.object.mode_set(mode='POSE')
