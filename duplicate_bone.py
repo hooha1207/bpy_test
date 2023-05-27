@@ -47,6 +47,7 @@ for bn in selb_n:
     cstrt.subtarget = check_add_bone_n
     cstrt.name = constraints_name
     bpy.ops.object.mode_set(mode='EDIT')
+    bpy.data.objects[actob_n].data.edit_bones[check_add_bone_n].parent = bpy.data.objects[actob_n].data.edit_bones[bn].parent
     bpy.ops.armature.bone_layers(layers=Bbone_layer)
 
 
