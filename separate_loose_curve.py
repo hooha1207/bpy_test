@@ -17,9 +17,10 @@ for spline_id in range(len(bpy.data.objects[actob_n].data.splines)):
         bpy.data.objects[actob_n].data.splines[0].bezier_points[0].select_control_point = True
         bpy.ops.curve.select_linked()
         bpy.ops.curve.separate()
-    else:
+    elif bpy.data.objects[actob_n].data.splines[0].type == "NURBS":
         bpy.data.objects[actob_n].data.splines[0].points[0].select = True
         bpy.ops.curve.select_linked()
+        bpy.data.objects[actob_n].data.splines[0].use_endpoint_u = True
         bpy.ops.curve.separate()
     
     bpy.ops.curve.select_all(action='DESELECT')
