@@ -429,7 +429,7 @@ for bone_layer_index in range(len(bpy.context.object.data.layers)):
 
 
 
-choose_layer_index = 16
+choose_layer_index = 24
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
     bpy.context.object.data.layers[bone_layer_index] = True
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
@@ -640,6 +640,17 @@ for bone in select_bone_name:
 import numpy as np
 
 
+spline_bone_layer = 26
+select_bone_layer = [  ] + [spline_bone_layer]
+
+
+Bbone_layer = []
+for i in range(len(bpy.context.object.data.layers)):
+    if i in select_bone_layer:
+        Bbone_layer.append(True)
+    else:
+        Bbone_layer.append(False)
+
 
 all_control_bonesize = 0.2
 rebatch = -(0.5-all_control_bonesize/2)
@@ -697,6 +708,7 @@ for cn in curve_bone_dic:
     bpy.ops.armature.select_linked()
     bpy.ops.object.mode_set(mode='POSE')
     check_all_control_p_n = bpy.context.selected_pose_bones[0].name
+    bpy.ops.pose.bone_layers(layers=Bbone_layer)
     
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.transform.resize(value=(all_control_bonesize, all_control_bonesize, all_control_bonesize))
@@ -711,6 +723,7 @@ for cn in curve_bone_dic:
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.data.objects[actob_n].data.edit_bones[control_bone_name].parent = bpy.data.objects[actob_n].data.edit_bones[check_all_control_p_n]
     bpy.data.objects[actob_n].data.edit_bones[back2cont[tmp_dic[cn]]].parent = bpy.data.objects[actob_n].data.edit_bones[check_all_control_p_n]
+    
 
 
 
