@@ -1,6 +1,5 @@
 #pose mode에서 merge 시키고자 하는 bone을 select로 설정한다
 #merge 기준이 되는 bone의 경우 active select로 설정한다
-#vertex group을 merge 시키고자 하는 mesh object를 select 설정한다
 #해당 스크립트를 실행한다
 
 import bpy
@@ -55,7 +54,7 @@ for ob in selob_n:
         
         ob.vertex_groups.remove(ob.vertex_groups[cbn])
         
-        if bone_deform:
+        if not bone_deform:
             bpy.data.objects[actob_n].pose.bones[cbn].bone.use_deform = False
         if bone_hide:
             bpy.data.objects[actob_n].pose.bones[cbn].bone.hide = True
@@ -64,17 +63,3 @@ for ob in selob_n:
             bpy.ops.object.mode_set(mode='EDIT')
             bpy.data.objects[actob_n].data.edit_bones.remove(bpy.data.objects[actob_n].data.edit_bones[cbn])
             bpy.ops.object.mode_set(mode='POSE')
-
-#    ob.vertex_groups[middle_bn].name = add_middle_stretch_n
-
-#bpy.ops.object.mode_set(mode='EDIT')
-#bpy.ops.armature.bone_primitive_add(name = add_middle_stretch_n)
-#bpy.ops.armature.select_linked()
-#check_add_middle_stretch_n = bpy.context.selected_editable_bones[0].name
-#bpy.data.objects[actob_n].data.edit_bones[check_add_middle_stretch_n].head = add_middle_stretch_mean_head
-#bpy.data.objects[actob_n].data.edit_bones[check_add_middle_stretch_n].tail = bpy.data.objects[actob_n].data.edit_bones[middle_bn].head
-
-#bpy.ops.object.mode_set(mode='POSE')
-#cstrt = bpy.data.objects[actob_n].pose.bones[check_add_middle_stretch_n].constraints.new("STRETCH_TO")
-#cstrt.target = bpy.data.objects[actob_n]
-#cstrt.subtarget = middle_bn
