@@ -3,7 +3,10 @@ import bmesh
 import math
 
 
-#bpy.ops.object.armature_add(enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+
+vertex_group_add = False
+add_modifier = True
+
 
 actOb = bpy.context.object
 org_co = bpy.context.object.matrix_world.to_translation()
@@ -13,7 +16,7 @@ actOb_rt = bpy.context.object.matrix_world.to_euler()
 
 
 if actOb.type == 'LATTICE':
-    vertices_co_s = [((actOb_sc*vertex.co) + org_co) for vertex in actOb.data.points if vertex.select]
+    vertices_co_s = [((actOb_sc*vertex.co_deform) + org_co) for vertex in actOb.data.points if vertex.select]
     vertices_idx_s = range(len(actOb.data.points))
 
 elif actOb.type == 'MESH':
@@ -60,8 +63,9 @@ for idx, i in enumerate(vertices_co_s):
     bpy.context.view_layer.objects.active = actOb
     
     vertex_idx = [vertices_idx_s[idx]]
-    v_group = bpy.context.object.vertex_groups.new(name=add_bone_name) #be wary of vertex group has no duplicate
-    v_group.add(vertex_idx, 1.0, "REPLACE")
+    if vertex_group_add:
+        v_group = bpy.context.object.vertex_groups.new(name=add_bone_name) #be wary of vertex group has no duplicate
+        v_group.add(vertex_idx, 1.0, "REPLACE")
     
     bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amarture_name)
     bpy.ops.object.mode_set(mode='EDIT')
@@ -69,13 +73,7 @@ for idx, i in enumerate(vertices_co_s):
 
 bpy.ops.object.mode_set(mode='OBJECT')
 bpy.context.view_layer.objects.active = actOb
-bpy.ops.object.modifier_add(type='ARMATURE')
-bpy.context.object.modifiers["Armature"].object = bpy.data.objects[add_amarture_name]
-bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amarture_name)
-
-
-
-
-
-
-
+if add_modifier:
+    bpy.ops.object.modifier_add(type='ARMATURE')
+    bpy.context.object.modifiers["Armature"].object = bpy.data.objects[add_amarture_name]
+    bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amarture_name)
