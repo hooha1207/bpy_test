@@ -4,8 +4,19 @@ import math
 
 
 
-vertex_group_add = False
+vertex_group_add = True
 add_modifier = True
+
+add_bone_name = 'shape_to_bone'
+
+add_amarture_name = "shape_to_amarture"
+bone_size = 0.08
+rebatch = -(0.5-bone_size/2)
+
+
+
+
+
 
 
 actOb = bpy.context.object
@@ -35,11 +46,6 @@ elif actOb.type == 'MESH':
 
 
 
-
-add_amarture_name = "shape_to_amarture"
-bone_size = 0.08
-rebatch = -(0.5-bone_size/2)
-
 bpy.ops.object.armature_add(enter_editmode=False, align='WORLD', location=(0,0,0), scale=(0.01, 0.01, 0.01))
 bpy.context.object.name = add_amarture_name
 
@@ -52,7 +58,7 @@ bpy.ops.armature.select_all(action='SELECT')
 bpy.ops.armature.delete()
 
 for idx, i in enumerate(vertices_co_s):
-    add_bone_name = f"shape_to_bone{idx}"
+    add_bone_name = f"{add_bone_name}{idx}"
     bpy.ops.armature.bone_primitive_add(name=add_bone_name)
     bpy.ops.armature.select_linked()
     bpy.ops.transform.translate(value=i) #world_space_coordinate
