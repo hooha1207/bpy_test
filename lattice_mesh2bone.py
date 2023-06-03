@@ -35,7 +35,6 @@ elif actOb.type == 'MESH':
     me = obj.data
     bpy.ops.object.mode_set(mode='EDIT')
     bm = bmesh.from_edit_mesh(me)
-    vertices= [e for e in bm.verts]
 
     vertices_idx_s= [e.index for e in bm.verts if e.select]
     vertices_co_s= [((actOb_sc * e.co) + org_co) for e in bm.verts if e.select]
