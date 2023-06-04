@@ -2,12 +2,12 @@ import bpy
 import numpy as np
 import bmesh
 
-threshold = 0.04
+add_modifier = False
+
+
 add_amarture_name = 'hair_card_Armature'
 add_bone_name = 'hair_card_bone'
 
-bone_size = 0.08
-rebatch = -(0.5-bone_size/2)
 
 
 
@@ -85,7 +85,7 @@ check_add_armature_n = bpy.context.active_object.name
 
 bpy.ops.object.mode_set(mode='EDIT')
 bpy.ops.armature.select_more()
-bpy.context.selected_editable_bones[0].name = add_bone_name
+bpy.context.selected_editable_bones[0].name = add_bone_name    
 
 
 
@@ -96,6 +96,7 @@ for edgeidx in sort_edge:
     if first:
         bpy.data.objects[check_add_armature_n].data.edit_bones[0].head = tmp[edgeidx][0]
         vg = bpy.data.objects[mesh_object_n].vertex_groups.new(name = add_bone_name)
+        bpy.data.objects[check_add_armature_n].data.edit_bones[0].name = vg.name
         vg.add(tmp[edgeidx][1], 1.0, "REPLACE")
         vg.add(tmp[edgeidx][2], 1.0, "REPLACE")
         before_co = tmp[edgeidx][0]
@@ -123,3 +124,13 @@ for edgeidx in sort_edge:
         bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].parent.select_tail = False
         bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].select = False
 #        print(tmp[edgeidx][0])
+
+
+bpy.ops.object.mode_set(mode='OBJECT')
+if add_modifier:
+    mod = actob.modifiers.new("ring_armature","ARMATURE")
+    mod.object = bpy.data.objects[check_add_armature_n]
+bpy.ops.object.select_all(action='DESELECT')
+
+bpy.context.view_layer.objects.active = actob
+bpy.ops.object.mode_set(mode='EDIT')
