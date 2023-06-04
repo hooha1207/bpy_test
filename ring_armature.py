@@ -94,7 +94,7 @@ first = True
 before_co = None
 for edgeidx in sort_edge:
     if first:
-        bpy.data.objects[add_amarture_name].data.edit_bones[0].head = tmp[edgeidx][0]
+        bpy.data.objects[check_add_armature_n].data.edit_bones[0].head = tmp[edgeidx][0]
         vg = bpy.data.objects[mesh_object_n].vertex_groups.new(name = add_bone_name)
         vg.add(tmp[edgeidx][1], 1.0, "REPLACE")
         vg.add(tmp[edgeidx][2], 1.0, "REPLACE")
@@ -103,13 +103,13 @@ for edgeidx in sort_edge:
         first = False
 #        print(tmp[edgeidx][0])
     elif head_move:
-        bpy.data.objects[add_amarture_name].data.edit_bones[0].tail = tmp[edgeidx][0]
+        bpy.data.objects[check_add_armature_n].data.edit_bones[0].tail = tmp[edgeidx][0]
         vg.add(tmp[edgeidx][1], 1.0, "REPLACE")
         vg.add(tmp[edgeidx][2], 1.0, "REPLACE")
         before_co = tmp[edgeidx][0]
         head_move = False
-        bpy.data.objects[add_amarture_name].data.edit_bones[0].select_head = False
-        bpy.data.objects[add_amarture_name].data.edit_bones[0].select = False
+        bpy.data.objects[check_add_armature_n].data.edit_bones[0].select_head = False
+        bpy.data.objects[check_add_armature_n].data.edit_bones[0].select = False
 #        print(tmp[edgeidx][0])
     else:
         bpy.ops.armature.extrude_move(TRANSFORM_OT_translate={"value":tmp[edgeidx][0] - before_co})
