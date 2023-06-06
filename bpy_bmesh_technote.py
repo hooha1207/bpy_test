@@ -5,6 +5,9 @@ import os
 
 
 
+# bmesh에서 active 되어있는 vert, edge, face 등을 알 수 있다
+bm.select_history.active
+
 #reference = https://blenderartists.org/t/how-to-join-merge-two-armatures/1185935
 #armature_join
 obs = [bpy.data.objects['Armature'], bpy.data.objects['a2'], bpy.data.objects['a3']]
