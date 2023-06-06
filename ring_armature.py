@@ -90,6 +90,7 @@ print('edge_dic_k', edge_dic.keys())
 print('edge_dic', [[j.index for j in i] for i in edge_dic.values()])
 
 tmp = {}
+before_distance = 99999.9
 for edge_dic_k in edge_dic:
     
     edges = edge_dic[edge_dic_k]
@@ -103,7 +104,8 @@ for edge_dic_k in edge_dic:
     middle_v = middle_v / (len(edges) * 2)
     distance = middle_v - start_middle_vector
     distance = (distance[0]**2 + distance[1]**2 + distance[2]**2)**1/2
-    if distance == 0.0:
+    if distance < before_distance:
+        before_distance = distance
         first_edge_idx = edge_dic_k
     another_edges = [i for i in edges[0].verts[0].link_edges if not i in edges]
     
