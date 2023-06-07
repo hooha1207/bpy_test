@@ -4,6 +4,9 @@ import os
 
 
 
+#선택된 bone의 point에서 normal의 z축으로 1만큼 bone을 extrude 해준다
+bpy.ops.armature.extrude_move(TRANSFORM_OT_translate={"value":(0,0,1), "orient_type":'NORMAL', "orient_matrix_type":'NORMAL', "constraint_axis":(False, False, True),"snap":False, "snap_elements":{'INCREMENT'}, "use_snap_project":False, "snap_target":'CLOSEST', "use_snap_self":True, "use_snap_edit":True, "use_snap_nonedit":True, "use_snap_selectable":False, "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 1)})
+
 
 # bmesh에서 active 되어있는 vert, edge, face 등을 알 수 있다
 bm.select_history.active
