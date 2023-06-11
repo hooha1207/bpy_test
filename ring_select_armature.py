@@ -16,7 +16,7 @@ add_bone_name = 'hair_card_bone'
 
 
 
-print('\n')
+#print('\n')
 
 actob = bpy.context.active_object #mesh_object
 mesh_object_n = actob.name
@@ -99,8 +99,8 @@ for edge_i in sel_ringedge_idx_buf:
 #for i in edge_dic:
 #    bm.edges[i]
 #    sel_ringverts_idx +=[i.verts]
-print('edge_dic_k', edge_dic.keys())
-print('edge_dic', [[j.index for j in i] for i in edge_dic.values()])
+#print('edge_dic_k', edge_dic.keys())
+#print('edge_dic', [[j.index for j in i] for i in edge_dic.values()])
 
 tmp = {}
 before_distance = 99999.9
@@ -152,7 +152,7 @@ for edge_dic_k in edge_dic:
     tmp[edge_dic_k] = [middle_v, edges, averts_ring]
 
 
-print('tmp',tmp)
+#print('tmp',tmp)
 sort_edge = []
 sort_edge.append(first_edge_idx)
 
@@ -169,7 +169,7 @@ for i in range(len(tmp.keys())-1):
     print(use_index)
 
 
-print('sort_edge', sort_edge)
+#print('sort_edge', sort_edge)
 
 
 bpy.ops.object.mode_set(mode='OBJECT')
@@ -198,8 +198,8 @@ for edgeidx in sort_edge:
             vg.add([bpy.data.objects[mesh_object_n].data.edges[edge_l].vertices[1]], 1.0, "REPLACE")
         head_move = True
         first = False
-        print(tmp[edgeidx][0])
-        print('a')
+#        print(tmp[edgeidx][0])
+#        print('a')
     elif head_move:
         bpy.data.objects[check_add_armature_n].data.edit_bones[0].tail = tmp[edgeidx][0]
         for edge_l in tmp[edgeidx][1]:
@@ -209,8 +209,8 @@ for edgeidx in sort_edge:
         head_move = False
         bpy.data.objects[check_add_armature_n].data.edit_bones[0].select_head = False
         bpy.data.objects[check_add_armature_n].data.edit_bones[0].select = False
-        print(tmp[edgeidx][0])
-        print('b')
+#        print(tmp[edgeidx][0])
+#        print('b')
     else:
         bpy.ops.armature.extrude_move(TRANSFORM_OT_translate={"value":tmp[edgeidx][0] - before_co})
         bpy.ops.armature.select_more()
@@ -222,8 +222,8 @@ for edgeidx in sort_edge:
         before_co = tmp[edgeidx][0]
         bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].parent.select_tail = False
         bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].select = False
-        print(tmp[edgeidx][0])
-        print('c')
+#        print(tmp[edgeidx][0])
+#        print('c')
 
 
 bpy.ops.object.mode_set(mode='OBJECT')
