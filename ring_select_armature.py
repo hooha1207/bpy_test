@@ -4,7 +4,6 @@
 
 import bpy
 import bmesh
-import mathutils
 
 add_modifier = True
 
@@ -17,7 +16,7 @@ add_bone_name = 'hair_card_bone'
 
 
 
-print('\n')
+#print('\n')
 
 actob = bpy.context.active_object #mesh_object
 mesh_object_n = actob.name
@@ -39,32 +38,20 @@ edge = bm.edges[sel_edge_idx]
 sel_edge_idx_le.append(edge.index)
 ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i]
 ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i]
-verts_check = []
-verts_check.append(edge.verts[0].index)
-verts_check.append(edge.verts[1].index)
-
-
 while len(ex_edge_l) >= 1:
     sel_edge_idx_le.append(ex_edge_l[0].index)
     edge = ex_edge_l[0]
-#    ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i and not i.index in sel_edge_idx_le]
-    if not edge.verts[0].index in verts_check:
-        ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i and not i.index in sel_edge_idx_le]
-        verts_check.append(edge.verts[0].index)
-    else:
-        ex_edge_l = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i and not i.index in sel_edge_idx_le]
-        verts_check.append(edge.verts[1].index)
-
+    ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i]
 while len(ex_edge_r) >= 1:
     sel_edge_idx_le.append(ex_edge_r[0].index)
     edge = ex_edge_r[0]
-#    ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i and not i.index in sel_edge_idx_le]
-    if not edge.verts[0].index in verts_check:
-        ex_edge_r = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i and not i.index in sel_edge_idx_le]
-        verts_check.append(edge.verts[0].index)
-    else:
-        ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i and not i.index in sel_edge_idx_le]
-        verts_check.append(edge.verts[1].index)
+    ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i]
+
+start_middle_vector = bm.edges[0].verts[0].co - bm.edges[0].verts[0].co
+for i in sel_edge_idx_le:
+    start_middle_vector += bm.edges[i].verts[0].co
+    start_middle_vector += bm.edges[i].verts[1].co
+start_middle_vector = start_middle_vector / (len(sel_edge_idx_le) *2)
 
 
 
