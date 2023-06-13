@@ -217,7 +217,10 @@ for edgeidx in sort_edge:
         roll = bpy.data.objects[check_add_armature_n].data.edit_bones[0].z_axis
 #        roll_value = (normal.x*roll.x+normal.y*roll.y+normal.z*roll.z) / ((normal.x**2+normal.y**2+normal.z**2)**1/2 * (roll.x**2+roll.y**2+roll.z**2)**1/2)
         roll_value = math.acos(np.dot(normal, roll))
-        bpy.data.objects[check_add_armature_n].data.edit_bones[0].roll = roll_value
+        if tmp[edgeidx][2].x <0:
+            bpy.data.objects[check_add_armature_n].data.edit_bones[0].roll = -1 *roll_value
+        else:
+            bpy.data.objects[check_add_armature_n].data.edit_bones[0].roll = roll_value
         
         for edge_l in tmp[edgeidx][1]:
             vg.add([bpy.data.objects[mesh_object_n].data.edges[edge_l].vertices[0]], 1.0, "REPLACE")
@@ -238,7 +241,10 @@ for edgeidx in sort_edge:
         roll = bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].z_axis
 #        roll_value = (normal.x*roll.x+normal.y*roll.y+normal.z*roll.z) / ((normal.x**2+normal.y**2+normal.z**2)**1/2 * (roll.x**2+roll.y**2+roll.z**2)**1/2)
         roll_value = math.acos(np.dot(normal, roll))
-        bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].roll = roll_value
+        if tmp[edgeidx][2].x <0:
+            bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].roll = -1*roll_value
+        else:
+            bpy.data.objects[check_add_armature_n].data.edit_bones[vg_n].roll = roll_value
         
         vg = bpy.data.objects[mesh_object_n].vertex_groups.new(name = vg_n)
         for edge_l in tmp[edgeidx][1]:
