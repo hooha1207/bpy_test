@@ -32,23 +32,26 @@ bm = bmesh.from_edit_mesh(actob.data)
 
 bm.edges.ensure_lookup_table()
 sel_edge_idx = bm.select_history.active.index
-sel_edge_idx_le = []
 
 sel_ringedge_idx = [i.index for i in bm.edges if i.select]
 
 
+# edge를 input하면 선택된 edge 중 input edge와 link 되어있는 edge를 찾아 fle_list에 index 형태로 append한다
+def find_link_edges(edge):
+    fle_list.append(edge.index)
+    edges = [i for i in edge.verts[0].link_edges if i != edge and i.select and not i.index in fle_list]
+    for j in [i for i in edge.verts[1].link_edges if i != edge and i.select and not i.index in fle_list]:
+        edges.append(j)
+    for k in edges:
+        fle_list.append(k.index)
+    if len(edges) > 0:
+        for i in edges:
+            find_link_edges(i)
 edge = bm.edges[sel_edge_idx]
-sel_edge_idx_le.append(edge.index)
-ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i]
-ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i]
-while len(ex_edge_l) >= 1:
-    sel_edge_idx_le.append(ex_edge_l[0].index)
-    edge = ex_edge_l[0]
-    ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and edge != i]
-while len(ex_edge_r) >= 1:
-    sel_edge_idx_le.append(ex_edge_r[0].index)
-    edge = ex_edge_r[0]
-    ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and edge != i]
+fle_list = []
+find_link_edges(edge)
+sel_edge_idx_le = list(set(fle_list))
+del fle_list
 
 start_middle_vector = bm.edges[0].verts[0].co - bm.edges[0].verts[0].co
 for i in sel_edge_idx_le:
