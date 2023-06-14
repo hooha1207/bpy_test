@@ -19,7 +19,7 @@ add_bone_name = 'hair_card_bone'
 
 
 
-#print('\n')
+print('\n')
 
 actob = bpy.context.active_object #mesh_object
 mesh_object_n = actob.name
@@ -64,49 +64,27 @@ start_middle_vector = start_middle_vector / (len(sel_edge_idx_le) *2)
 
 
 
-
-
-
-
-sel_ringedge_idx_buf = sel_ringedge_idx.copy()
-
 bm.edges.ensure_lookup_table()
 
 #edge_idx : link_edge
 edge_dic = {}
 
+for edge_i in sel_ringedge_idx:
+    start = True
+    for k in edge_dic:
+        if edge_i in [i.index for i in edge_dic[k]]:
+            start=False
+            break
+    if start:
+        fle_list = []
+        find_link_edges(bm.edges[edge_i])
+        edge_dic[edge_i] = [bm.edges[i] for i in list(set(fle_list))]
 
-for edge_i in sel_ringedge_idx_buf:
-    
-    for ve in edge_dic.values():
-        if edge_i in list(set([i.index for i in ve])):
-            continue
-    find_last_link_l = []
-    edge = bm.edges[edge_i]
-    find_last_link_l.append(edge)
-    ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and not i in find_last_link_l and edge != i]
-    ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and not i in find_last_link_l and edge != i]
-    while len(ex_edge_l) >= 1:
-#        print(ex_edge[0].index)
-        find_last_link_l.append(ex_edge_l[0])
-        edge = ex_edge_l[0]
-        ex_edge_l = [i for i in edge.verts[0].link_edges if i.index in sel_ringedge_idx and not i in find_last_link_l and edge != i]
-    while len(ex_edge_r) >= 1:
-#        print(ex_edge[0].index)
-        find_last_link_l.append(ex_edge_r[0])
-        edge = ex_edge_r[0]
-        ex_edge_r = [i for i in edge.verts[1].link_edges if i.index in sel_ringedge_idx and not i in find_last_link_l and edge != i]
-    if not set(find_last_link_l) in [set(i) for i in edge_dic.values()]:
-        edge_dic[edge_i] = find_last_link_l
+for _ in edge_dic:
+    print('edge_dic_key',_)
+    print([i.index for i in edge_dic[_]])
 
 
-
-#sel_ringverts_idx = []
-#for i in edge_dic:
-#    bm.edges[i]
-#    sel_ringverts_idx +=[i.verts]
-#print('edge_dic_k', edge_dic.keys())
-#print('edge_dic', [[j.index for j in i] for i in edge_dic.values()])
 
 tmp = {}
 before_distance = 99999.9
@@ -123,7 +101,7 @@ for edge_dic_k in edge_dic:
     middle_v = middle_v / (len(edges) * 2)
     distance = middle_v - start_middle_vector
     distance = (distance[0]**2 + distance[1]**2 + distance[2]**2)**1/2
-    print(distance)
+#    print(distance)
     if distance < before_distance:
         before_distance = distance
         first_edge_idx = edge_dic_k
@@ -175,13 +153,13 @@ for i in range(len(tmp.keys())-1):
     
     averts_idx = tmp[use_index][-1]
     
-    print(use_index)
+#    print(use_index)
     use_index = [i for i in averts_idx if not i in sort_edge][0]
     sort_edge.append(use_index)
-    print(use_index)
+#    print(use_index)
 
 
-#print('sort_edge', sort_edge)
+print('sort_edge', sort_edge)
 
 
 bpy.ops.object.mode_set(mode='OBJECT')
@@ -200,7 +178,11 @@ head_move = False
 first = True
 before_co = None
 for edgeidx in sort_edge:
-    
+#    일단 bone의 z_axis를 추출해서 face normal과 내적을 통해 cos 섹터 값을 추출한다
+#    구한 cos 섹터 값을 arccos 연산으로 radius 각도로 만들어준다
+#    이후 ( 180 / pi ) 를 곱해 degrees 값으로 변환한다
+
+#    이때 추출한 bone axis vector와 normal vector는 단위 vector이기 때문에 내적 값을 구할 수 있음
     if first:
         bpy.data.objects[check_add_armature_n].data.edit_bones[0].head = tmp[edgeidx][0]
         vg = bpy.data.objects[mesh_object_n].vertex_groups.new(name = add_bone_name)
