@@ -38,7 +38,8 @@ sel_ringedge_idx = [i.index for i in bm.edges if i.select]
 
 # edge를 input하면 선택된 edge 중 input edge와 link 되어있는 edge를 찾아 fle_list에 index 형태로 append한다
 def find_link_edges(edge):
-    fle_list.append(edge.index)
+    if not edge.index in fle_list:
+        fle_list.append(edge.index)
     edges = [i for i in edge.verts[0].link_edges if i != edge and i.select and not i.index in fle_list]
     for j in [i for i in edge.verts[1].link_edges if i != edge and i.select and not i.index in fle_list]:
         edges.append(j)
