@@ -12,9 +12,16 @@ choose_layer_index = 1 # curve_to_bone layer
 
 
 
+
+
 print('\n')
 actob = bpy.context.active_object # armature
 actob_n = actob.name
+
+current_bone_layer = []
+for idx, _ in enumerate(bpy.context.object.data.layers):
+    if _:
+        current_bone_layer.append(idx)
 
 
 fcbn = []
@@ -310,3 +317,16 @@ for ob in ob_select:
                 
 
 bpy.context.view_layer.objects.active = ob_armature
+n_c_object.select_set(False)
+
+
+
+for bone_layer_index in range(len(bpy.context.object.data.layers)):
+    bpy.context.object.data.layers[bone_layer_index] = True
+for bone_layer_index in range(len(bpy.context.object.data.layers)):
+    if bone_layer_index in current_bone_layer:
+        continue
+    bpy.context.object.data.layers[bone_layer_index] = False
+
+
+bpy.ops.object.mode_set(mode='POSE')
