@@ -7,6 +7,8 @@ import bpy
 
 
 add_name = 'bone_to_curve'
+bone_size = 0.05 # curve_to_bone size
+choose_layer_index = 1 # curve_to_bone layer
 
 
 
@@ -55,9 +57,11 @@ bpy.context.scene.collection.objects.link(n_c_object)
 
 
 nurb = n_curve.splines.new('NURBS')
-nurb.use_endpoint_u = True
-n_c_object.data.splines
+bpy.context.view_layer.objects.active = n_c_object
+bpy.context.view_layer.objects.active = actob
 nurb.points.add(len(fcbn))
+nurb.use_endpoint_u = True
+nurb.order_u = 3
 
 # len(co_list) - idx로 작성한 이유는, spline_IK를 적용했을 때 bone이 뒤집히는 현상을 방지하기 위해서다
 for idx, i in enumerate(nurb.points):
@@ -74,7 +78,7 @@ bpy.ops.object.mode_set(mode='OBJECT')
 n_c_object.select_set(True)
 
 
-choose_layer_index = 1
+
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
     bpy.context.object.data.layers[bone_layer_index] = True
 for bone_layer_index in range(len(bpy.context.object.data.layers)):
@@ -94,7 +98,7 @@ ob_armature = bpy.context.active_object
 ob_select = [i for i in bpy.context.selected_objects if not i == ob_armature]
 
 
-bone_size = 0.05
+
 rebatch = -(0.5-bone_size/2)
 
 parent_bone_size = 0.1
