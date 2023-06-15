@@ -51,7 +51,7 @@ def find_link_edges(edge):
 edge = bm.edges[sel_edge_idx]
 fle_list = []
 find_link_edges(edge)
-sel_edge_idx_le = list(set(fle_list))
+sel_edge_idx_le = fle_list
 del fle_list
 
 start_middle_vector = bm.edges[0].verts[0].co - bm.edges[0].verts[0].co
@@ -79,7 +79,7 @@ for edge_i in sel_ringedge_idx:
     if start:
         fle_list = []
         find_link_edges(bm.edges[edge_i])
-        edge_dic[edge_i] = [bm.edges[i] for i in list(set(fle_list))]
+        edge_dic[edge_i] = [bm.edges[i] for i in fle_list]
 
 for _ in edge_dic:
     print('edge_dic_key',_)
