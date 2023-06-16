@@ -1,3 +1,7 @@
+# spline IK가 시작될 top parent bone을 선택하고 해당 스크립트를 실행하면,
+# top parent bone을 시작으로 하는 spline이 child 끝까지 연결되는 curve를 생성한 뒤,
+# 해당 커브를 타겟으로 최하위 child bone에 spline ik constraints를 추가한다
+
 import bpy
 # import bmesh
 # import mathutils
@@ -9,14 +13,16 @@ import bpy
 add_name = 'bone_to_curve'
 bone_size = 0.05 # curve_to_bone size
 choose_layer_index = 1 # curve_to_bone layer
-
-
+step = 3
 
 
 
 print('\n')
 actob = bpy.context.active_object # armature
 actob_n = actob.name
+
+top_parent_bn = bpy.context.selected_pose_bones[0].parent.name
+
 
 current_bone_layer = []
 for idx, _ in enumerate(bpy.context.object.data.layers):
@@ -56,6 +62,16 @@ for i in fcbn:
 
 #print(co_list)
 
+step_co_list = []
+for i in range(0,len(fcbn),step):
+    print(i)
+    step_co_list.append(co_list[i])
+
+step_co_list.append(co_list[-1])
+
+co_list = step_co_list
+del step_co_list
+
 n_curve = bpy.data.curves.new(add_name,'CURVE')
 n_curve.dimensions = '3D'
 n_c_object = bpy.data.objects.new(add_name, n_curve)
@@ -66,7 +82,7 @@ bpy.context.scene.collection.objects.link(n_c_object)
 nurb = n_curve.splines.new('NURBS')
 bpy.context.view_layer.objects.active = n_c_object
 bpy.context.view_layer.objects.active = actob
-nurb.points.add(len(fcbn))
+nurb.points.add(len(co_list)-1)
 nurb.use_endpoint_u = True
 nurb.order_u = 3
 
@@ -299,6 +315,8 @@ for ob in ob_select:
                 #set bone size
                 bpy.ops.transform.resize(value=(bone_size, bone_size, bone_size))
                 bpy.ops.transform.translate(value=(0.0,0.0,rebatch))
+                bpy.context.selected_editable_bones[0].parent = bpy.context.active_object.data.edit_bones[top_parent_bn]
+                print(bpy.context.active_object.data.edit_bones[top_parent_bn])
                 bpy.ops.object.mode_set(mode='OBJECT')
                 
                 #set hook
