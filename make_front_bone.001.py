@@ -3,7 +3,7 @@
 #이때 복사된 bone은 기존 bone의 copy transforms의 타겟이 되어 복사된 bone의 움직임을 copy한다
 #이때 before origin(full) 로 constraints가 적용되어 추가 제어를 할 수 있다
 #사용시 주의사항
-#bone의 parent가 다른 bone layer에 존재할 경우, 정상작동을 하지않으므로, 이를 이지하고 사용할 것
+#bone의 parent가 다른 bone layer에 존재할 경우, 정상작동을 하지않으므로, 이를 인지하고 사용할 것
 
 import bpy
 
