@@ -8,9 +8,16 @@ import bpy
 
 add_bone_name = 'stretch_n'
 constraints_n = 'stretch_target'
-bone_size = 0.05
+bone_size = 0.5
 
 bone_layer = 8
+
+
+
+
+
+rebatch = -(0.5-bone_size/2)
+
 select_bone_layer = [  ] + [bone_layer]
 
 
@@ -66,7 +73,29 @@ print(tailhead_dic)
 for tailbn in tailhead_dic:
     if tailhead_dic[tailbn] == None:
         continue
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.armature.bone_primitive_add(name=add_bone_name)
+    bpy.ops.armature.select_linked()
+    check_add_bone_name = bpy.context.selected_editable_bones[0].name
+    #set place
+    bpy.ops.transform.translate(value=bpy.data.objects[actob_n].data.edit_bones[tailbn].head) #world_space_coordinate
+    bpy.ops.transform.resize(value=(bone_size, bone_size, bone_size))
+    bpy.ops.transform.translate(value=(0.0,0.0,rebatch))
+    
     bpy.ops.object.mode_set(mode='POSE')
-    cstrt = bpy.data.objects[actob_n].pose.bones[tailbn].constraints.new("STRETCH_TO")
+    cstrt = bpy.data.objects[actob_n].pose.bones[tailbn].constraints.new("COPY_LOCATION")
     cstrt.target = bpy.data.objects[actob_n]
-    cstrt.subtarget = tailhead_dic[tailbn]
+#    cstrt.subtarget = tailhead_dic[tailbn]
+    cstrt.subtarget = check_add_bone_name
+    
+    tailhead_dic[tailbn] = [tailhead_dic[tailbn], check_add_bone_name]
+    
+print(tailhead_dic)
+#stretch_constraints
+for tailbn in tailhead_dic:
+    if tailhead_dic[tailbn] != None:
+        print(tailbn)
+        print(tailhead_dic[tailhead_dic[tailbn][0]][1])
+        cstrt = bpy.data.objects[actob_n].pose.bones[tailbn].constraints.new("STRETCH_TO")
+        cstrt.target = bpy.data.objects[actob_n]
+        cstrt.subtarget = tailhead_dic[tailhead_dic[tailbn][0]][1]
