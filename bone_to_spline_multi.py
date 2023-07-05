@@ -14,7 +14,7 @@ import bpy
 add_name = 'bone_to_curve'
 bone_size = 0.05 # curve_to_bone size
 choose_layer_index = 18 # curve_to_bone layer
-step = 3
+step = 3 # curve_decimate_level
 
 
 
