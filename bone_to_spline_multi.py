@@ -1,6 +1,7 @@
 # spline IK가 시작될 top parent bone을 선택하고 해당 스크립트를 실행하면,
 # top parent bone을 시작으로 하는 spline이 child 끝까지 연결되는 curve를 생성한 뒤,
 # 해당 커브를 타겟으로 최하위 child bone에 spline ik constraints를 추가한다
+# 해당 스크립트를 실행할 떼 connect bone의 최상위 top parent를 선택하고 실행해야 된다
 
 import bpy
 # import bmesh
