@@ -93,9 +93,9 @@ for tailbn in tailhead_dic:
 print(tailhead_dic)
 #stretch_constraints
 for tailbn in tailhead_dic:
-    if tailhead_dic[tailbn] != None:
+    if tailhead_dic[tailbn] != None and tailhead_dic[tailhead_dic[tailbn][0]] != None:
         print(tailbn)
-        print(tailhead_dic[tailhead_dic[tailbn][0]][1])
+#        print(tailhead_dic[tailhead_dic[tailbn][0]][1])
         cstrt = bpy.data.objects[actob_n].pose.bones[tailbn].constraints.new("STRETCH_TO")
         cstrt.target = bpy.data.objects[actob_n]
         cstrt.subtarget = tailhead_dic[tailhead_dic[tailbn][0]][1]
