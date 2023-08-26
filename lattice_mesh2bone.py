@@ -9,7 +9,7 @@ add_modifier = True
 
 add_bone_name = 'shape_to_bone'
 
-add_amarture_name = "shape_to_amarture"
+add_amarture_name = "shape_to_armature"
 bone_size = 0.08
 rebatch = -(0.5-bone_size/2)
 
@@ -69,7 +69,7 @@ for idx, i in enumerate(vertices_co_s):
     
     vertex_idx = [vertices_idx_s[idx]]
     if vertex_group_add:
-        v_group = bpy.context.object.vertex_groups.new(name=add_bone_name) #be wary of vertex group has no duplicate
+        v_group = bpy.context.object.vertex_groups.new(name=_add_bone_name) #be wary of vertex group has no duplicate
         v_group.add(vertex_idx, 1.0, "REPLACE")
     
     bpy.context.view_layer.objects.active = bpy.context.scene.objects.get(add_amarture_name)
