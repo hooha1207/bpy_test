@@ -4,6 +4,28 @@ import os
 
 
 
+
+
+
+
+
+# viewport를 렌더링하기 위해 존재하는 카메라의 회전값을 출력한다
+[i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.view_rotation
+# viewport를 렌더링하기 위해 존재하는 카메라의 location 값을 출력한다
+# 이때 viewport 카메라는 object 카메라가 아니기 때문에 location이 회전축을 의미한다
+# 즉 viewport 카메라는 특정 location 좌표 주위를 일정 distance로 회전한다고 생각하면 된다
+[i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.view_location
+# viewport를 렌더링하기 위해 존재하는 카메라의 origin과 떨어진 거리 즉 distance를 출력한다
+[i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.view_distance
+# viewport를 렌더링하기 위해 존재하는 카메라의 관점 즉 카메라 오브젝트로 보고 있는지, viport 카메라로 보고 있는지를 출력한다
+[i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.view_perspective
+# 넘버패드 0번을 눌렀을 때 카메라로 보도록 만들어 줄 수 있다
+[i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.view_perspective = "CAMERA"
+# 카메라 오브젝트 없이 viewport를 볼 때처럼 볼 수 있다
+[i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.view_perspective = "PERSP"
+
+
+
 #선택된 bone의 point에서 normal의 z축으로 1만큼 bone을 extrude 해준다
 bpy.ops.armature.extrude_move(TRANSFORM_OT_translate={"value":(0,0,1), "orient_type":'NORMAL', "orient_matrix_type":'NORMAL', "constraint_axis":(False, False, True),"snap":False, "snap_elements":{'INCREMENT'}, "use_snap_project":False, "snap_target":'CLOSEST', "use_snap_self":True, "use_snap_edit":True, "use_snap_nonedit":True, "use_snap_selectable":False, "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 1)})
 
