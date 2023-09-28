@@ -12,6 +12,7 @@ import os
 # modifier를 apply 하지 않고 modifier가 적용된 mesh의 data를 얻을 수 있는 기능이다
 # constraints은 따로 적용되지 않음 (애초에 constraints로 변한 transform 정보는 matrix_local에서 얻을 수 있음)
 # 아래 코드로 얻은 정보는 modifier 파라미터가 달라져서 mesh 정보가 달라지면 달라진 정보를 저장한다
+# ref_link = https://b3d.interplanety.org/en/how-to-get-mesh-data-with-modifiers/
 bpy.context.active_object.evaluated_get(bpy.context.evaluated_depsgraph_get())
 
 

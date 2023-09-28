@@ -1,6 +1,6 @@
 import bpy
 from bpy_extras import view3d_utils
-
+import mathutils
 
 
 
@@ -23,27 +23,21 @@ class ViewOperatorRayCast(bpy.types.Operator):
                 """Run this function on left mouse, execute the ray cast"""
                 # get the context arguments
                 scene = context.scene
-                region = context.region # [for k in [i for i in bpy.context.scren.areas if i.type=='VIEW_3D'][0].regions if k.type == 'WINDOW'][0] 로 얻을 수 있음. 해당 객체는 VIEW_3D에 존재하는 ui box type 중 WINDOW 타입을 출력한다
-                rv3d = context.region_data # [i for i in bpy.context.scren.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d 로 얻을 수 있음 (까먹어서 업데이트 필요)
-                coord = event.mouse_region_x, event.mouse_region_y # [i for i in bpy.context.scren.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.mouse_region_x, or mouse_region_y 로 얻을 수 있음
-
-                print(region.type)
-                print(dir(region))
-                print(coord)
-
+                region = context.region # [k for k in [i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].regions if k.type == 'WINDOW'][0] 로 얻을 수 있음. 해당 객체는 VIEW_3D에 존재하는 ui rgion 중 WINDOW 타입을 출력한다
+                rv3d = context.region_data # [i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d 로 얻을 수 있음
+                coord = event.mouse_region_x, event.mouse_region_y # region 내부에 상대적인 좌표를 찾는다고 하며, mouse_x와는 다른 결과를 도출해낸다 (mouse_x, mouse_y로 출력된 값을 사용할 경우, z축이 반전된다)
                 # get the ray from the viewport and mouse
                 view_vector = view3d_utils.region_2d_to_vector_3d(region, rv3d, coord)
-                ray_origin = view3d_utils.region_2d_to_origin_3d(region, rv3d, coord)
-                
-                print(ray_origin)
-                print(view_vector)
+
+                ray_origin = view3d_utils.region_2d_to_origin_3d(region, rv3d, coord) # viewport camera의 position vector
+
 
                 ray_target = ray_origin + view_vector
 
                 def visible_objects_and_duplis():
                     """Loop over (object, matrix) pairs (mesh only)"""
 
-                    depsgraph = context.evaluated_depsgraph_get()
+                    depsgraph = context.evaluated_depsgraph_get() # 모디파이어로 인해 변형된 mesh의 데이터를 가져올 수 있는 기능. 최종 상태의 object를 얻을 수 있다
                     print(depsgraph)
                     for dup in depsgraph.object_instances:
                         # print(dup)
@@ -96,6 +90,7 @@ class ViewOperatorRayCast(bpy.types.Operator):
                     best_original.select_set(True)
                     context.view_layer.objects.active = best_original
             
+            # out of view3d area
             view3d_areas = [[i.x, i.y, i.width, i.height, i.type] for i in context.screen.areas if i.type=='VIEW_3D']
             for x,y,w,h,t in view3d_areas:
                 if event.mouse_x < x or event.mouse_x > (x+w) or event.mouse_y < y or event.mouse_y > (y+h):
