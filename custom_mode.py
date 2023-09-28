@@ -25,7 +25,7 @@ class ViewOperatorRayCast(bpy.types.Operator):
                 scene = context.scene
                 region = context.region # [k for k in [i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].regions if k.type == 'WINDOW'][0] 로 얻을 수 있음. 해당 객체는 VIEW_3D에 존재하는 ui rgion 중 WINDOW 타입을 출력한다
                 rv3d = context.region_data # [i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d 로 얻을 수 있음
-                coord = event.mouse_region_x, event.mouse_region_y # region 내부에 상대적인 좌표를 찾는다고 하며, mouse_x와는 다른 결과를 도출해낸다 (mouse_x, mouse_y로 출력된 값을 사용할 경우, z축이 반전된다)
+                coord = event.mouse_region_x, event.mouse_region_y # region 내부에 상대적인 좌표를 찾는다. 즉 mouse 좌표를 region space 내부에서만 움직이도록 maprange한 것이다
                 # get the ray from the viewport and mouse
                 view_vector = view3d_utils.region_2d_to_vector_3d(region, rv3d, coord)
 
