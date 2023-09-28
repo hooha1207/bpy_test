@@ -23,10 +23,12 @@ class ViewOperatorRayCast(bpy.types.Operator):
                 """Run this function on left mouse, execute the ray cast"""
                 # get the context arguments
                 scene = context.scene
-                region = context.region
-                rv3d = context.region_data
-                coord = event.mouse_region_x, event.mouse_region_y
+                region = context.region # [for k in [i for i in bpy.context.scren.areas if i.type=='VIEW_3D'][0].regions if k.type == 'WINDOW'][0] 로 얻을 수 있음. 해당 객체는 VIEW_3D에 존재하는 ui box type 중 WINDOW 타입을 출력한다
+                rv3d = context.region_data # [i for i in bpy.context.scren.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d 로 얻을 수 있음 (까먹어서 업데이트 필요)
+                coord = event.mouse_region_x, event.mouse_region_y # [i for i in bpy.context.scren.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d.mouse_region_x, or mouse_region_y 로 얻을 수 있음
 
+                print(region.type)
+                print(dir(region))
                 print(coord)
 
                 # get the ray from the viewport and mouse
