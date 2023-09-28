@@ -97,12 +97,14 @@ class ViewOperatorRayCast(bpy.types.Operator):
             view3d_areas = [[i.x, i.y, i.width, i.height, i.type] for i in context.screen.areas if i.type=='VIEW_3D']
             for x,y,w,h,t in view3d_areas:
                 if event.mouse_x < x or event.mouse_x > (x+w) or event.mouse_y < y or event.mouse_y > (y+h):
-                    return {'CANCELLED'}
+                    return {'PASS_THROUGH'}
             
             main(context, event)
             return {'RUNNING_MODAL'}
         elif event.type in {'RIGHTMOUSE', 'ESC'}:
             return {'CANCELLED'}
+        else:
+            return {'PASS_THROUGH'}
 
         return {'RUNNING_MODAL'}
 
