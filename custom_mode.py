@@ -27,34 +27,34 @@ class ViewOperatorRayCast(bpy.types.Operator):
                 rv3d = context.region_data # [i for i in bpy.context.screen.areas if i.type=='VIEW_3D'][0].spaces[0].region_3d 로 얻을 수 있음
                 coord = event.mouse_region_x, event.mouse_region_y # region 내부에 상대적인 좌표를 찾는다. 즉 mouse 좌표를 region space 내부에서만 움직이도록 maprange한 것이다
                 # get the ray from the viewport and mouse
-                view_vector = view3d_utils.region_2d_to_vector_3d(region, rv3d, coord)
-
+                view_vector = view3d_utils.region_2d_to_vector_3d(region, rv3d, coord) # viewport에 표시되는 2차원 이미지의 특정 부분에 맞는 시야각 vector를 얻을 수 있다
                 ray_origin = view3d_utils.region_2d_to_origin_3d(region, rv3d, coord) # viewport camera의 position vector
 
 
-                ray_target = ray_origin + view_vector
+                ray_target = ray_origin + view_vector # camera의 경우 멀리 떨어져있다 하더라도, rotate로 180d 회전하면 완전 다른 vector가 된다. 즉 location이 아무리 멀어도 카메라가 특정 축으로 180d 회전하면 vector가 반전되어야만 된다
+                # 근데 현재 스크립트는 ray_target vector를 그대로 사용하고 있다. 어떻게 사용하는지 알 필요가 있다
+
 
                 def visible_objects_and_duplis():
                     """Loop over (object, matrix) pairs (mesh only)"""
-
-                    depsgraph = context.evaluated_depsgraph_get() # 모디파이어로 인해 변형된 mesh의 데이터를 가져올 수 있는 기능. 최종 상태의 object를 얻을 수 있다
-                    print(depsgraph)
+                    depsgraph = context.evaluated_depsgraph_get() # 모디파이어로 인해 변형된 mesh의 데이터를 가져올 수 있는 기능. 최종 상태의 object를 얻을 수 있을 때 필요
                     for dup in depsgraph.object_instances:
-                        # print(dup)
-                        print(dir(dup))
                         if dup.is_instance:  # Real dupli instance
                             obj = dup.instance_object
                             yield (obj, dup.matrix_world.copy())
                         else:  # Usual object
                             obj = dup.object
                             yield (obj, obj.matrix_world.copy())
+                    # 결과적으로 해당 함수는 evaluated object를 generator로 반환하는 역할을 수행한다
+                    # evaluated object는 hide 되어있는 object는 반환하지 않는다
+
 
                 def obj_ray_cast(obj, matrix):
                     """Wrapper for ray casting that moves the ray into object space"""
 
                     # get the ray relative to the object
-                    matrix_inv = matrix.inverted()
-                    ray_origin_obj = matrix_inv @ ray_origin
+                    matrix_inv = matrix.inverted() # 역행렬을 계산한다
+                    ray_origin_obj = matrix_inv @ ray_origin # 행렬곱의 의미는 행렬을 변화시키는다는 뜻인데, 이 공식을 모르겠다. 이를 제대로 알려면 행렬 공식을 알아야 된다
                     ray_target_obj = matrix_inv @ ray_target
                     ray_direction_obj = ray_target_obj - ray_origin_obj
 

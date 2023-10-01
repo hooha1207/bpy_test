@@ -290,3 +290,10 @@ pip.main(['install', 'torch'])
 pip.main(['install', 'torchvision'])
 #위 코드는 만약 blender에 pip이 존재할 경우 손쉽게 pytorch를 설치하는 코드다
 #cmd에서 pip install 하는 것과 같다
+
+import sys
+import os
+python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
+# C:\Program Files\blender3-0\3.0\python\bin\python.exe
+target = os.path.join(sys.prefix, 'lib', 'site-packages')
+# C:\Program Files\blender3-0\3.0\python\lib\site-packages
