@@ -301,3 +301,6 @@ target = os.path.join(sys.prefix, 'lib', 'site-packages')
 subprocess.call([python_exe, '-m', 'ensurepip'])
 subprocess.call([python_exe, '-m', 'pip', 'install', '--upgrade', 'pip'])
 subprocess.call([python_exe, '-m', 'pip', 'install', '--upgrade', 'scipy', '-t', target])
+
+# 아래 커맨드를 cmd 창에서 실행해도 정상 작동한다
+C:\Program Files\blender3-0\3.0\python\bin\python.exe python -m pip install --upgrade pip
