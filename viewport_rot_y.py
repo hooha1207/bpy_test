@@ -9,6 +9,7 @@ from math import pi
 first_dv = False
 keep_d = True
 clockwise = True
+calc_empty = None
 
 class ModalTimerOperator(bpy.types.Operator):
     """Operator which runs itself from a timer"""
@@ -35,6 +36,7 @@ class ModalTimerOperator(bpy.types.Operator):
     rot_x : bpy.props.FloatProperty(name='rot_x')
     rot_y : bpy.props.FloatProperty(name='rot_y')
     rot_z : bpy.props.FloatProperty(name='rot_z')
+    calc_empty_n : bpy.props.StringProperty(name='calc_empty_n')
 
     def modal(self, context, event):
         if event.type in {'ESC'}:
@@ -51,7 +53,15 @@ class ModalTimerOperator(bpy.types.Operator):
             self.before_dv = Vector((0,0,0))
             self.rot_x = (context.space_data.region_3d.view_rotation.to_euler()).x
             self.rot_z = (context.space_data.region_3d.view_rotation.to_euler()).z
+            
+            calc_empty = bpy.data.objects.new('calc_rot',None)
+            self.calc_empty_n = calc_empty.name
+            calc_empty.rotation_quaternion = context.space_data.region_3d.view_rotation
+            calc_empty.rotation_euler = context.space_data.region_3d.view_rotation.to_euler()
+            print(calc_empty.rotation_quaternion)
+            
         elif event.type == 'MOUSEMOVE' and self.r_press:
+            
             
             self.mp = Vector((event.mouse_region_x-self.mc_x, event.mouse_region_y-self.mc_y, 0)).normalized()
             self.dv = (Vector(self.mp) - (Vector((self.before_x, self.before_y, 0)).normalized())).normalized()
@@ -82,21 +92,21 @@ class ModalTimerOperator(bpy.types.Operator):
             
             print(clockwise)
             
+            print(bpy.data.objects[self.calc_empty_n].rotation_quaternion)
+            bpy.data.objects[self.calc_empty_n].rotation_euler.rotate_axis('Z',(-1*self.clockwise)*pi/45)
+            print(bpy.data.objects[self.calc_empty_n].rotation_quaternion)
             
-            self.rot_y = (context.space_data.region_3d.view_rotation.to_euler()).y+(self.clockwise*pi/45)
-            if (context.space_data.region_3d.view_rotation.to_euler()).x < 0:
-                self.rot_y = (context.space_data.region_3d.view_rotation.to_euler()).y-(self.clockwise*pi/45)
-            
-            
-            self.r = Vector((self.rot_x, self.rot_y, self.rot_z))
-            
-            context.space_data.region_3d.view_rotation = (mathutils.Euler(self.r)).to_quaternion()
-            
-            print(Vector(self.r))
+            context.space_data.region_3d.view_rotation = bpy.data.objects[self.calc_empty_n].rotation_euler.to_quaternion()
+
+#            mathutils.Quaternion(mathutils.Euler((bpy.data.objects[self.calc_empty_n].rotation_euler.x, bpy.data.objects[self.calc_empty_n].rotation_euler.y, bpy.data.objects[self.calc_empty_n].rotation_euler.z)))
+#            context.space_data.region_3d.view_rotation = mathutils.Quaternion(mathutils.Euler((bpy.data.objects[self.calc_empty_n].rotation_euler.x, bpy.data.objects[self.calc_empty_n].rotation_euler.y, bpy.data.objects[self.calc_empty_n].rotation_euler.z)))
+#            
             
         elif event.type =='RIGHTMOUSE' and event.value == 'RELEASE' and self.r_press:
             print('done')
             self.r_press = False
+            bpy.data.objects.remove(bpy.data.objects[self.calc_empty_n])
+#            return {'RUNNING_MODAL'}
         else:
             return {'PASS_THROUGH'}
 
