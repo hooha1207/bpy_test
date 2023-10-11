@@ -14,6 +14,28 @@ armtob = [i for i in bpy.context.selected_objects if i.type == "ARMATURE"][0]
 meshob = [i for i in bpy.context.selected_objects if i.type == "MESH"][0]
 
 
+
+
+
+
+### collection
+collection = bpy.data.collections.new(f'{meshob.name}_FollowBone')
+bpy.context.collection.children.link(collection)
+
+# detect collection
+loop = True
+for coll in bpy.data.collections:
+    for coll_ob in coll.objects:
+        if coll_ob.name == meshob.name:
+            current_collection_n = coll.name
+            loop = False
+            break
+    if not loop:
+        break
+
+
+
+
 # duplicate mesh object
 bpy.ops.object.select_all(action='DESELECT')
 bpy.context.view_layer.objects.active = meshob
@@ -22,6 +44,8 @@ bpy.ops.object.duplicate_move()
 meshob_dup_n = bpy.context.active_object.name
 meshob_dup = bpy.data.objects[meshob_dup_n]
 
+bpy.data.collections[current_collection_n].objects.unlink(meshob_dup)
+collection.objects.link(meshob_dup)
 
 
 # clear vg
@@ -107,10 +131,12 @@ meshob_duptrk = bpy.data.objects[meshob_duptrk_n]
 dismod = meshob_duptrk.modifiers.new('Displace','DISPLACE')
 
 
+
+
 # set bone
 fol_armt = bpy.data.armatures.new(follow_armature_n)
 folarmt_ob = bpy.data.objects.new(name=follow_armature_n, object_data=fol_armt)
-bpy.context.collection.objects.link(folarmt_ob)
+collection.objects.link(folarmt_ob)
 
 bpy.context.view_layer.objects.active = folarmt_ob
 bpy.ops.object.select_all(action='DESELECT')
@@ -133,4 +159,7 @@ for pb in folarmt_ob.pose.bones:
     cstrt.subtarget = pb.name
 
 bpy.ops.object.mode_set(mode='OBJECT')
+
+
+
 
