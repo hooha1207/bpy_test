@@ -4,10 +4,13 @@ import mathutils
 
 
 
+
+zip_armt_n = 'zip_armature'
 GeometryNodeTree_n = 'Transfer_position_use_index'
 vgn_vid = 'vid'
 follow_armature_n = 'follow_armature'
 bone_length = 0.1
+displace_height = '0.1'
 
 
 armtob = [i for i in bpy.context.selected_objects if i.type == "ARMATURE"][0]
@@ -36,6 +39,18 @@ for coll in bpy.data.collections:
 
 
 
+### add zip armature object
+zip_armt = bpy.data.armatures.new(zip_armt_n)
+ziparmt_ob = bpy.data.objects.new(name=zip_armt_n, object_data=zip_armt)
+collection.objects.link(ziparmt_ob)
+
+#bpy.context.view_layer.objects.active = ziparmt_ob
+#bpy.ops.object.select_all(action='DESELECT')
+#bpy.ops.object.mode_set(mode='EDIT')
+
+
+
+
 # duplicate mesh object
 bpy.ops.object.select_all(action='DESELECT')
 bpy.context.view_layer.objects.active = meshob
@@ -57,8 +72,11 @@ for mod in meshob_dup.modifiers:
     meshob_dup.modifiers.remove(mod)
 
 
+
+
 ### set geometry node
-# add node
+
+# add geometry node
 geon_mod = meshob_dup.modifiers.new(name=GeometryNodeTree_n, type='NODES')
 geometry_ng = bpy.data.node_groups.new(name=GeometryNodeTree_n, type='GeometryNodeTree')
 geometry_ng.use_fake_user = True
@@ -87,13 +105,16 @@ n_vectmath_scl = geometry_ng.nodes.new(type="ShaderNodeVectorMath")
 n_vectmath_scl.operation = 'SCALE'
 n_vectmath_scl.location = (500,0)
 
+n_vectmath_add = geometry_ng.nodes.new(type="ShaderNodeVectorMath")
+n_vectmath_add.operation = 'ADD'
+n_vectmath_add.location = (500,200)
+
 n_setpost = geometry_ng.nodes.new(type="GeometryNodeSetPosition")
 n_setpost.location = (600,0)
 
 n_output = geometry_ng.nodes.new(type="NodeGroupOutput")
 socket_out1 = geometry_ng.outputs.new('NodeSocketGeometry','Geometry')
 n_output.location = (700,0)
-
 
 
 # geometry node connect
@@ -114,6 +135,13 @@ geometry_ng.links.new([i for i in n_vectmath_scl.outputs if i.type =='VECTOR'][0
 geometry_ng.links.new(n_output.inputs['Geometry'], n_setpost.outputs['Geometry'])
 
 
+
+# add zip armature
+zip_armt_mod = meshob_dup.modifiers.new(name=zip_armt_n, type='ARMATURE')
+zip_armt_mod.object = ziparmt_ob
+
+
+
 # vertex index to vg
 vid_norm = {}
 
@@ -124,10 +152,71 @@ for v in meshob_dup.data.vertices:
 
 
 
-# make damped track mesh
+### make damped track mesh
 bpy.ops.object.duplicate_move()
 meshob_duptrk_n = bpy.context.active_object.name
 meshob_duptrk = bpy.data.objects[meshob_duptrk_n]
+
+# remove modifiers
+for mod in meshob_duptrk.modifiers:
+    meshob_duptrk.modifiers.remove(mod)
+
+
+# add geometry node
+geon_mod = meshob_duptrk.modifiers.new(name=f'{GeometryNodeTree_n}_trk', type='NODES')
+geometry_ng = bpy.data.node_groups.new(name=f'{GeometryNodeTree_n}_trk', type='GeometryNodeTree')
+geometry_ng.use_fake_user = True
+geon_mod.node_group = geometry_ng
+
+
+n_input = geometry_ng.nodes.new(type="NodeGroupInput")
+n_input.location = (0,0)
+socket_in1 = geometry_ng.inputs.new('NodeSocketGeometry','Geometry')
+
+n_obinfo = geometry_ng.nodes.new(type="GeometryNodeObjectInfo")
+n_obinfo.location = (100,0)
+geometry_ng.nodes["Object Info"].inputs[0].default_value = meshob_dup
+
+n_spid = geometry_ng.nodes.new(type="GeometryNodeSampleIndex")
+n_spid.data_type = 'FLOAT_VECTOR'
+n_spid.location = (200,0)
+
+n_idx = geometry_ng.nodes.new(type="GeometryNodeInputIndex")
+n_idx.location = (300,0)
+
+n_post = geometry_ng.nodes.new(type="GeometryNodeInputPosition")
+n_post.location = (400,0)
+
+n_vectmath_scl = geometry_ng.nodes.new(type="ShaderNodeVectorMath")
+n_vectmath_scl.operation = 'SCALE'
+n_vectmath_scl.location = (500,0)
+
+n_vectmath_add = geometry_ng.nodes.new(type="ShaderNodeVectorMath")
+n_vectmath_add.operation = 'ADD'
+n_vectmath_add.location = (500,200)
+
+n_setpost = geometry_ng.nodes.new(type="GeometryNodeSetPosition")
+n_setpost.location = (600,0)
+
+n_output = geometry_ng.nodes.new(type="NodeGroupOutput")
+socket_out1 = geometry_ng.outputs.new('NodeSocketGeometry','Geometry')
+n_output.location = (700,0)
+
+
+# geometry node connect
+geometry_ng.links.new(n_input.outputs['Geometry'], n_setpost.inputs['Geometry'])
+
+geometry_ng.links.new(n_obinfo.outputs['Geometry'], n_spid.inputs['Geometry'])
+
+geometry_ng.links.new(n_post.outputs['Position'], [i for i in n_spid.inputs if i.type=='VECTOR'][0])
+geometry_ng.links.new(n_idx.outputs['Index'], n_spid.inputs['Index'])
+
+geometry_ng.links.new([i for i in n_spid.outputs if i.type=='VECTOR'][0], n_setpost.inputs['Position'])
+
+geometry_ng.links.new(n_output.inputs['Geometry'], n_setpost.outputs['Geometry'])
+
+
+# add displace
 dismod = meshob_duptrk.modifiers.new('Displace','DISPLACE')
 
 
