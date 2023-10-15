@@ -6,7 +6,7 @@ from math import pi
 
 
 
-keep_d = True
+
 clockwise = True
 
 rot = mathutils.Euler((0,0,0))
@@ -16,7 +16,7 @@ class ModalTimerOperator(bpy.types.Operator):
     bl_idname = "custom_mode_test.rotate_y_viewport"
     bl_label = "Rotate_y viewport"
 
-    r_press : bpy.props.BoolProperty(name='l_press')
+    r_press : bpy.props.BoolProperty(name='r_press')
     mc_x : bpy.props.IntProperty(name='middle_coord_x')
     mc_y : bpy.props.IntProperty(name='middle_coord_y')
     mp : bpy.props.FloatVectorProperty(name='mp')
@@ -70,7 +70,7 @@ class ModalTimerOperator(bpy.types.Operator):
             self.before_x = event.mouse_region_x-self.mc_x
             self.before_y = event.mouse_region_y-self.mc_y
             
-            print(clockwise)
+#            print(clockwise)
             
             
             rot = context.space_data.region_3d.view_rotation.to_euler()
