@@ -12,7 +12,6 @@ clockwise = True
 rot = mathutils.Euler((0,0,0))
 
 class ModalTimerOperator(bpy.types.Operator):
-    """Operator which runs itself from a timer"""
     bl_idname = "custom_mode_test.rotate_y_viewport"
     bl_label = "Rotate_y viewport"
 
