@@ -304,3 +304,5 @@ subprocess.call([python_exe, '-m', 'pip', 'install', '--upgrade', 'scipy', '-t',
 
 # 아래 커맨드를 cmd 창에서 실행해도 정상 작동한다
 C:\Program Files\blender3-0\3.0\python\bin\python.exe python -m pip install --upgrade pip
+# 만약 위 커맨드로 정상작동이 안될 경우, 아래 커맨드를 참고해서 사용하자
+C:\Program Files\blender3-0\3.0\python\bin python -m pip install --upgrade pip
