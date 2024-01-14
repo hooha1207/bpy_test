@@ -60,10 +60,10 @@ for idx in vrange:
 
 bpy.ops.object.mode_set(mode='OBJECT')
 
-print('\n')
-print(vvs)
-print(tvs)
-print(modfvs)
+# print('\n')
+# print(vvs)
+# print(tvs)
+# print(modfvs)
 
 
 
@@ -75,3 +75,18 @@ for idx, v in enumerate(sk.data):
 
 bpy.context.active_object.data.shape_keys.key_blocks[skn].value = 1.0
 
+
+# 기존 스크립트인 sign_shapekey_visibility 의 여러 번 실행해서 최종 결과값을 얻어야 되는 문제점을 해결하지 못했다
+# 해당 문제점의 의심되는 원인으로는 bone의 행렬 연산을 고려해서 vertex를 이동하지 않았기 때문이라 생각함
+# 이를 해결하려면 해당하는 vertex에 아래 식을 전개해야 된다
+# 해당 vertex를 움직이는 bone의 weight * (해당 bone의 scale matrix/2) * ((target_v - vis_vert) * 해당 bone의 rotation matrix) * 해당 bone의 location matrix
+# 위 과정을 거치기 위한 컴퓨팅 파워가 적절하지 않다 판단해 현재 이렇게 구현해놨으나,
+# 추후 해당 과정을 거치는게 보다 합리적이다 판단되면 수정할 예정
+
+# ex) visibility vertex를 기준으로 target vertex와 차이점을 구해서 shapekey에 해당 값만큼 vertex를 이동시켰을 때,
+# 해당 vertex가 bone의 scale로 이동했다 가정하면 shapekey로 움직이는 vertex 이동량이 반감되어야 되지만
+# 현 스크립트는 이를 고려하지 않고 움직이므로 결과적으로 적절한 값을 얻을 수 없게 된다
+
+# ex) 위와 같은 상황일 때
+# 해당 vertex가 bone의 rotation 90으로 이동했다 가정하면 (target_v - vis_vert) 벡터에 rotation matrix를 곱해야 되지만,
+# 현 스크립트는 이를 고려하지 않고 움직이므로 결과적으로 해당 스크립트를 실행하면 실행할수록 오차가 심하게 된다
