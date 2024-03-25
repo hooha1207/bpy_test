@@ -1,0 +1,63 @@
+"""
+to do list
+:
+현재 deform vertex group 이 아닌 vertex group이 존재할 경우 문제 발생 여부를 알 수 없다
+    확인해볼 필요가 있다
+"""
+import bpy
+import json
+
+
+filename = 'tmp.txt'
+path = 'C:/Users/lig_002/Desktop'
+filepath = f'{path}/{filename}'
+
+weight_threshold = 0.0001
+
+
+
+
+
+f = open(filepath, 'w+')
+fw = f.write
+
+class nameError(Exception):
+    def __init__(self):
+        super().__init__('Check name bones what i using "." or other special signs')
+
+
+
+
+
+
+depsgraph = bpy.context.evaluated_depsgraph_get()
+
+total_json = []
+
+for ob in bpy.context.selected_objects:
+    armt_obs = []
+    for modf in ob.modifiers:
+        if modf.type =='ARMATURE':
+           armt_obs.append(modf.object)
+    
+    jnt_ns = []
+    for armt in armt_obs:
+        for b in armt.data.bones:
+            jnt_ns.append(b.name)
+    
+    
+    vis_ob = depsgraph.objects[ob.name]
+    
+    ob_w = []
+    for v in vis_ob.data.vertices:
+        dict = {'vid':v.index}
+        for vg in v.groups:
+            if vis_ob.vertex_groups[vg.group].name in jnt_ns:
+                if round(vg.weight, 3) > weight_threshold:
+                    dict[vis_ob.vertex_groups[vg.group].name] = round(vg.weight, 3)
+        ob_w.append(dict)
+    total_json.append(json.dumps({vis_ob.name:ob_w}))
+
+
+fw(json.dumps(total_json))
+f.close()
