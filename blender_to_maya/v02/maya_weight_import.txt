@@ -1,8 +1,3 @@
-"""
-to do list
-:
-"""
-
 import maya.cmds as cmds
 from maya.api.OpenMaya import MVector, MMatrix, MPoint
 import maya.api.OpenMaya as om
@@ -13,7 +8,7 @@ import json
 
 
 file = 'weight_test.txt'
-path = 'C:/Users/lig_002/Desktop'
+path = 'C:'+os.environ['HOMEPATH']+'/Desktop'
 filepath = path+'/'+file
 
 
@@ -22,9 +17,9 @@ f = open(filepath, 'r')
 
 for info in json.loads(f.readline()):
 	dict = json.loads(info)
-	obn_l = cmds.ls(u''+dict.keys()[0],l=True)[0]
+	obn_l = cmds.ls(u''+list(dict.keys())[0],l=True)[0]
 	
-	obn = cmds.ls(u''+dict.keys()[0])[0]
+	obn = cmds.ls(u''+list(dict.keys())[0])[0]
 	skin_n = cmds.listConnections(obn_l+'|'+obn+'Shape', c=False, t='skinCluster')[0]
 	
 	for vinfo in dict[obn]:

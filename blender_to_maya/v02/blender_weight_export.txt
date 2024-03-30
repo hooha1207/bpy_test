@@ -1,12 +1,6 @@
-"""
-to do list
-:
-현재 deform vertex group 이 아닌 vertex group이 존재할 경우 문제 발생 여부를 알 수 없다
-    확인해볼 필요가 있다
-"""
 bl_info = {
     "name": "Export Weight to maya",
-    "author": "unknown",
+    "author": "hooha",
     "version": (0, 1),
     "blender": (4, 0, 0),
     "location": "File > Export > Weight (.txt)",
@@ -27,8 +21,8 @@ from bpy.props import StringProperty, IntProperty, BoolProperty, FloatProperty
 from bpy_extras.io_utils import ExportHelper
 
 
-filename = 'tmp.txt'
-path = 'C:/Users/lig_002/Desktop'
+filename = 'weight_test'
+path = 'C:'+ os.environ['HOMEPATH'] +'/Desktop'
 filepath = f'{path}/{filename}'
 
 weight_threshold = 0.0001
@@ -37,11 +31,11 @@ weight_threshold = 0.0001
 
 
 
+
+
 class nameError(Exception):
     def __init__(self):
         super().__init__('Check name bones what i using "." or other special signs')
-
-
 
 
 
@@ -64,8 +58,10 @@ def write_json(context, filepath, weight_threshold, weight_round):
             for b in armt.data.bones:
                 jnt_ns.append(b.name)
         
-        
         vis_ob = depsgraph.objects[ob.name]
+        
+        if not len(vis_ob.data.vertices) == len(ob.data.vertices):
+            vis_ob = ob
         
         ob_w = []
         for v in vis_ob.data.vertices:
@@ -88,7 +84,7 @@ class WeightsExporter(bpy.types.Operator, ExportHelper):
     bl_label = "Export"
 
     filename_ext = ".txt"
-    filter_glob: StringProperty(default="*.txt", options={'HIDDEN'})
+    filepath: StringProperty(default=filepath, options={'HIDDEN'})
 
     weight_threshold: FloatProperty(name="Weight Threshold",
             description="Weight threshold for export",
@@ -112,7 +108,7 @@ class WeightsExporter(bpy.types.Operator, ExportHelper):
 
 
 def menu_export(self, context):
-    default_path = os.path.splitext(bpy.data.filepath)[0] + ".txt"
+    default_path = path
     self.layout.operator(WeightsExporter.bl_idname, text="Weights (.txt)")
 
 def register():
