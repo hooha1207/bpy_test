@@ -4,7 +4,7 @@ import maya.api.OpenMaya as om
 import maya.api.OpenMayaAnim as oma
 import math
 import json
-
+import os
 
 
 file = 'weight_test.txt'
