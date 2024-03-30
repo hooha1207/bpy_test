@@ -2,8 +2,7 @@ import bpy
 
 
 
-actob = bpy.context.active_object
-selob = [i for i in bpy.context.selected_objects if i!=actob]
+selob = [i for i in bpy.context.selected_objects]
 
 GeometryNodeTree_n = 'blur_vg'
 
