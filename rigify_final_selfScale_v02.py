@@ -133,9 +133,9 @@ def preprocess_self_scale_ik(actob, bn_mch, bn_ikc, bn_ikp, bn_ikt, bn_mch2ikc, 
     cstrt.target = actob
     cstrt.subtarget = stretch_locTarget_bn
     
-    cstrt = actob.pose.bones[stretch_sc_transfer_n].constraints.new('DAMPED_TRACK')
+    cstrt = actob.pose.bones[stretch_sc_transfer_n].constraints.new('COPY_ROTATION')
     cstrt.target = actob
-    cstrt.subtarget = stretch_target_n
+    cstrt.subtarget = stretch_n
     
     
 
