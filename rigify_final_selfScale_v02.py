@@ -1,7 +1,7 @@
 import bpy
 from math import pi
 from mathutils import Vector, Matrix, Quaternion, Euler
-
+#from timeit import default_timer as timer
 
 
 
@@ -203,8 +203,13 @@ def preprocess_self_scale_ik(actob, bn_mch, bn_ikc, bn_ikp, bn_ikt, bn_mch2ikc, 
     
     actob.data.bones[dup_mch_n].name = f'{bn_mch2ikc}.{side}'
     
+    
+    bpy.ops.object.mode_set(mode='EDIT')
+    actob.data.edit_bones[stretch_sc_transfer_n].parent = actob.data.edit_bones[stretch_locTarget_bn]
+    
     actob.data.layers[-2] = False
     bpy.ops.object.mode_set(mode='OBJECT')
+    
 
 
 
