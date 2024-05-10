@@ -10,4 +10,4 @@ def update_realtime(scene=None):
     return 0.0
 
 
-bpy.app.timers.register(cloth_main, persistent=True)
+bpy.app.timers.register(update_realtime, persistent=True)
