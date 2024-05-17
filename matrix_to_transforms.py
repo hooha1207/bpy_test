@@ -15,3 +15,6 @@ print('scale\n',s)
 print('rotation\n',r)
 print('translate\n',t)
 print('')
+
+### 해당 계산은 추후 다른 툴에서 matrix to s,r,t가 안될 때를 대비해서 작성했다.
+### 기본적으로 matrix to s,r,t는 지원한다면 해당 기능을 사용할 것
