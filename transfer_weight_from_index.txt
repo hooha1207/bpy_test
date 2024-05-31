@@ -1,0 +1,94 @@
+import bpy
+
+
+
+
+same_vg = True
+keep_locvg = False
+#mix_mode_l = ["REPLACE", "ADD", "SUBTRACT"]
+mix_mode_idx = 0
+
+
+
+
+
+actob = bpy.context.active_object                                   #send_ob
+selob = [i for i in bpy.context.selected_objects if i!=actob][0]    #receive_ob
+
+
+
+#print('--------------------------------------------------------------')
+
+mix_mode_l = ["REPLACE", "ADD", "SUBTRACT"]
+mix_mode = mix_mode_l[mix_mode_idx]
+
+
+send_vds={}
+
+for v in actob.data.vertices:
+    vg_dics = {}
+    for vg in v.groups:
+        dic = {vg.group:vg.weight}
+        vgn = actob.vertex_groups[vg.group].name
+        vg_dics[vgn] = vg.weight
+    send_vds[v.index] = vg_dics
+# {vertex_index:{vertexgroup_name:weight, ...}, ...}
+#print(send_vds)
+
+send_vgns = [vg.name for vg in actob.vertex_groups]
+receive_vgns = [vg.name for vg in selob.vertex_groups]
+
+
+
+omission_vgns_send = []
+for svgn in send_vgns:
+    if not svgn in receive_vgns:
+        omission_vgns_send.append(svgn)
+# send ob에는 있는데, receive ob에는 없는 vg의 경우, vg를 새로 만들어줘야 됨
+
+omission_vgns_receive = []
+for rvgn in receive_vgns:
+    if not rvgn in send_vgns:
+        omission_vgns_receive.append(rvgn)
+# recevie ob에는 있는데, send ob에는 없는 vg의 경우, 따로 만들 필요 없음
+
+
+send_vgn_dic = {}
+for vg in actob.vertex_groups:
+    send_vgn_dic[vg.name] = vg.index
+    
+receive_vgn_dic = {}
+loc_receive_vgns = {}
+
+for vg in selob.vertex_groups:
+    if vg.lock_weight:
+        loc_receive_vgns[vg.name] = vg.index
+    receive_vgn_dic[vg.name] = vg.index
+
+#print(send_vgn_dic)
+#print(receive_vgn_dic)
+#print(loc_receive_vgns)
+
+
+for omvgn in omission_vgns_send:
+    vg = selob.vertex_groups.new(name=omvgn)
+
+
+for v in selob.data.vertices:
+    for vvg in v.groups:
+        if vvg.group in list(loc_receive_vgns.values()) and keep_locvg:
+            print('skip')
+        else:
+            selob.vertex_groups[vvg.group].remove([v.index])
+
+
+
+for v in selob.data.vertices:
+    for vgn in send_vds[v.index]:
+        if keep_locvg:
+            if not vgn in list(loc_receive_vgns.keys()):
+                weight = send_vds[v.index][vgn]
+                selob.vertex_groups[vgn].add([v.index],weight,'REPLACE')
+        else:
+            weight = send_vds[v.index][vgn]
+            selob.vertex_groups[vgn].add([v.index],weight,'REPLACE')

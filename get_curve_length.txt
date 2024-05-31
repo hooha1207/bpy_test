@@ -1,0 +1,17 @@
+import bpy
+import mathutils
+
+
+length = 0.0
+
+before_pv = None
+
+for p in bpy.context.active_object.data.splines[0].points:
+    co = p.co
+    if before_pv == None:
+        before_pv = co.to_3d()
+    else:
+        length += (co.to_3d() - before_pv).length
+
+
+print(length)
