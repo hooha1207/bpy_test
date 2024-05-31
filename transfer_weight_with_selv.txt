@@ -1,0 +1,56 @@
+import bpy
+import bmesh
+import mathutils
+
+
+actob = bpy.context.active_object
+bpy.ops.object.mode_set(mode='OBJECT')
+bpy.ops.object.mode_set(mode='EDIT')
+
+
+symmetry_bool = False
+if bpy.context.object.use_mesh_mirror_x:
+    bpy.context.object.use_mesh_mirror_x = False
+    symmetry_bool = True
+
+
+
+bm = bmesh.from_edit_mesh(actob.data)
+
+bm.verts.ensure_lookup_table()
+
+actv_idx = bm.select_history.active.index
+selv_idx = [i.index for i in actob.data.vertices if i.select and not i.index == actv_idx]
+
+
+bm.verts[actv_idx].select = False
+bm.select_history.remove(bm.verts[actv_idx])
+bmesh.update_edit_mesh(actob.data)
+bm.select_history.add(bm.verts[selv_idx[0]])
+bpy.ops.object.vertex_group_clean(group_select_mode='ALL', limit=1, keep_single=False)
+
+
+bpy.ops.object.mode_set(mode='OBJECT')
+
+for vg in actob.data.vertices[actv_idx].groups:
+    
+    vgidx = vg.group
+    weight = vg.weight
+    
+    
+    n_vgn = ''
+    if '.L' in actob.vertex_groups[vgidx].name:
+        n_vgn = actob.vertex_groups[vgidx].name.replace('.L', '.R')
+    elif '.R' in actob.vertex_groups[vgidx].name:
+        n_vgn = actob.vertex_groups[vgidx].name.replace('.R', '.L')
+    else:
+        n_vgn = actob.vertex_groups[vgidx].name
+    
+    nvg_idx = [i.index for i in actob.vertex_groups if i.name == n_vgn][0]
+    actob.vertex_groups[nvg_idx].add(selv_idx, weight, "REPLACE")
+
+
+bpy.ops.object.mode_set(mode='EDIT')
+
+if symmetry_bool:
+    bpy.context.object.use_mesh_mirror_x = True
