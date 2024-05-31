@@ -1,0 +1,15 @@
+import bpy
+
+
+
+for ob in bpy.context.selected_objects:
+    
+    bpy.context.view_layer.objects.active = ob
+    
+    modf = ob.modifiers.new(type='MESH_DEFORM',name='MeshDeform')
+    modf.object = bpy.data.objects['cage_chain']
+    modf.precision = 7
+    
+    bpy.ops.object.modifier_move_to_index(modifier=modf.name, index=0)
+    
+    bpy.ops.object.meshdeform_bind({'object':ob, 'active_object':ob, 'scene':bpy.data.scenes['Scene']}, modifier="MeshDeform")
