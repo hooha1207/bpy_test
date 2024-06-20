@@ -8,7 +8,7 @@ import json
 
 
 """
-export 하고자 하는 mesh와 해당 mesh와 연결된 skin cluster를 선택한다
+export 하고자 하는 mesh와 해당 mesh를 선택한다
 path 변수에 입력된 경로가 존재하는지 확인 및
 해당 경로가 내가 blender에서 불러올 경로가 맞는지 확인한다
 스크립트를 실행한다
@@ -20,7 +20,7 @@ path 변수에 입력된 경로가 존재하는지 확인 및
 
 
 
-dir_path = 'C:'+os.environ['HOMEPATH']+'/Desktop/tmp/blender/240411/after/lop/export_script'
+dir_path = 'C:'+os.environ['HOMEPATH']+'/Desktop/tmp/test'
 
 for SHAPENAME in cmds.ls(sl=True,l=True):
 	
