@@ -20,7 +20,7 @@ SKINCLUSTER = cmds.ls(sl=True,l=True, et='skinCluster')[0]
 SHAPENAME = [i for i in cmds.ls(sl=True,l=True) if i!=SKINCLUSTER][0]
 
 file_weight = 'weight_test_' + SHAPENAME.split('|')[-1] + '.json'
-path = 'C:'+os.environ['HOMEPATH']+'/Desktop/tmp/blender/240411/after/pet/export_script'
+path = 'C:'+os.environ['HOMEPATH']+'/Desktop/tmp/test'
 filepath_weight = path+'/'+file_weight
 
 file_bone = 'bone_test_'+ SHAPENAME.split('|')[-1] +'.json'
