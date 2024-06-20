@@ -10,10 +10,10 @@ import os
 """
 info_path 변수에 maya에서 export script로 만든 json이 모여있는 폴더 경로가 부여되었는지 확인한다
 해당 스크립트는 해당 경로에 있는 모든 json을 읽기 때문에
-	원치 않는 weight도 읽을 수 있기 때문에 필요한 json 이외의 json 파일은 삭제한다
+    원치 않는 weight도 읽을 수 있기 때문에 필요한 json 이외의 json 파일은 삭제한다
 maya에서 weight를 export 할 때 대상이 된 mesh와
-	vertex id가 완전히 동일하며 형태도 비슷한 mesh object가
-	blender에 존재하는지 확인한다
+    vertex id가 완전히 동일하며 형태도 비슷한 mesh object가
+    blender에 존재하는지 확인한다
 해당 스크립트를 실행한다
 maya에서 deform joint의 world space 정보를 읽어 blender에서 생성한다
 이렇게 생성된 pose mode로 접근한 뒤 apply pose해준다
@@ -29,7 +29,7 @@ copy skin weight paint로 weight 값을 새로운 mesh에 가져온 뒤
 
 
 
-info_path = 'C:'+os.environ['HOMEPATH']+'/Desktop/tmp/blender/240411/after/pet/export_script'
+info_path = 'C:'+os.environ['HOMEPATH']+'/Desktop/tmp/test'
 
 
 bn_length = 1.0
@@ -76,6 +76,9 @@ for i in range(len(bones_info)):
             n_armt_ob.pose.bones[bi['bn'].split('|')[-1]].location = loc
             
             unique_bns.append(bi['bn'])
+
+    bpy.ops.pose.armature_apply(selected=False)
+    
     f_b.close()
 
 try:
@@ -116,7 +119,6 @@ try:
     f_w.close()
 except:
     pass
-
 
 
 bpy.ops.object.mode_set(mode='OBJECT')
