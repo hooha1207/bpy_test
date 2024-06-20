@@ -30,3 +30,5 @@
 # 각도가 90 ~ 135 사이일 경우 값이 증가함
 
 
+( ((fc%duration) < (duration/2)) * (fc%(duration/2))+((fc%duration) > (duration/2)) * ((duration/2) - ((fc%(duration/2))*2)) ) / (duration/2)*strength
+선형적으로 증가하는 값을 입력받으면(current frame) 특정 범위 내에서 값이 진동한다
