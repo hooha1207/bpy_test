@@ -9,7 +9,11 @@ rigob = bpy.data.objects[rigob_n]
 infl_ob = bpy.data.objects['rig_MCH']
 
 meshob_n = [i for i in bpy.context.selected_objects if i != rigob][0].name
-meshob = bpy.data.objects[meshob_n]
+
+depsgraph = bpy.context.evaluated_depsgraph_get()
+meshob = depsgraph.objects[meshob_n]
+
+
 
 selbn = [i.name for i in bpy.context.selected_pose_bones]
 
