@@ -50,11 +50,16 @@ def ray_cast(origin, direction, vertices, faces):
 
 faces_b = [np.array([j for j in i.vertices]) for i in obj_b.data.polygons]
 
+hit_vertex_ids = []
+
 for i, vertex in enumerate(vertex_positions_a):
     origin = vertex
     direction = vertex_normals_a[i]
     hit, t = ray_cast(origin, direction, np.array([obj_b.matrix_world @ v.co for v in mesh_b.vertices]), faces_b)
     if hit:
+        hit_vertex_ids.append(i)
         print(f"Hit at t={t} from vertex {i}")
     else:
         print(f"No hit from vertex {i}")
+
+print("Hit vertex IDs:", hit_vertex_ids)
