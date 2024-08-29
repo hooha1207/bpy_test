@@ -6,10 +6,13 @@ import numpy as np
 
 tmp_vvs_l = 99
 l_attr_n = 'linkF_v.'
-link_level = 2
+vvs_ls_attr_n = 'vvs_c'
+link_level = 0
 
 
 
+
+bpy.ops.object.mode_set(mode='OBJECT')
 
 def get_linkF_v(vs, rvs, obm):
     for v in vs:
@@ -18,7 +21,7 @@ def get_linkF_v(vs, rvs, obm):
             for vv in f.verts:
                 if not vv.index in rvs:
                     rvs.append(vv.index)
-    
+
 
 
 for ob in bpy.context.selected_objects:
@@ -29,7 +32,8 @@ for ob in bpy.context.selected_objects:
     obm.edges.ensure_lookup_table()
     
     ob_vvs = []
-    vvs_l = 0
+    ob_vvs_l_total = 0
+    ob_vvs_ls = []
     for v in obm.verts:
         vvs = []
         for vlf in v.link_faces:
@@ -51,13 +55,19 @@ for ob in bpy.context.selected_objects:
         for vid in vvs:
             vvs_arr[tmp] = vid
             tmp+=1
-        if len(vvs) > vvs_l:
-            vvs_l = len(vvs)
+        if len(vvs) > ob_vvs_l_total:
+            ob_vvs_l_total = len(vvs)
+        
+        ob_vvs_ls.append(len(vvs))
     
     ob_vvs_arr = np.array(ob_vvs)
-    ob_vvs_arr = ob_vvs_arr[:,:vvs_l]
+    ob_vvs_arr = ob_vvs_arr[:,:ob_vvs_l_total]
     
-    for i in range(vvs_l):
+    for i in range(ob_vvs_l_total):
         attr = ob.data.attributes.new(f'{l_attr_n}{i}', 'INT', 'POINT')
         for idx,v in enumerate(attr.data):
             v.value = ob_vvs_arr[idx][i]
+        
+    attr = ob.data.attributes.new(f'{vvs_ls_attr_n}', 'INT', 'POINT')
+    for idx,v in enumerate(attr.data):
+        v.value = ob_vvs_ls[idx]
