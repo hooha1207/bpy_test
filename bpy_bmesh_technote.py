@@ -8,7 +8,10 @@ import os
 
 
 
-
+# armature object의 bone local matrix를 출력해도
+# roll 값이 고려되지 않은 matrix가 출력되게 된다
+# 이를 해결하기 위해 convert를 roll이 고려된 matrix를 구할 수 있다
+actob.convert_space(pose_bone=pb, matrix=pb.matrix, from_space='WORLD',to_space='LOCAL')
 
 
 # 새로 만든 object를 scene collection에 연결하기
