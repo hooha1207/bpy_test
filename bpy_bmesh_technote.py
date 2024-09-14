@@ -1,6 +1,9 @@
 import bpy
+import bmesh
 import math
 import os
+import numpy as np
+import mathutils
 
 
 
