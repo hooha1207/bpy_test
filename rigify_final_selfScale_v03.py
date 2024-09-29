@@ -219,23 +219,6 @@ def preprocess_self_scale_ik(actob, bn_mch, bn_ikc, bn_ikp, bn_ikt, bn_mch2ikc, 
 rig_ob_n = bpy.context.active_object.name
 actob = bpy.data.objects[rig_ob_n]
 
-
-
-category_n = 'arm'
-
-bn_mch = 'MCH-forearm_ik'
-bn_ikc = 'upper_arm_ik'
-bn_ikp = 'upper_arm_parent'
-bn_ikt = 'MCH-upper_arm_ik_target'
-
-bn_mch2ikc = 'forearm_ik'
-
-bn_bbstr = f'sc_stretch_{category_n}'
-bn_bbstrt = f'sc_stretch_target_{category_n}'
-bn_bbtrf = f'sc_stretch_transfer_{category_n}'
-
-
-
 dicts = []
 
 info = {}
